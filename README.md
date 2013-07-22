@@ -1,5 +1,5 @@
-phonegap-parse-plugin
-=====================
+Phonegap Parse.com Plugin
+=========================
 
 Phonegap 3.0.0 plugin for Parse.com push service
 
@@ -22,6 +22,33 @@ Add the plugin to your res/xml/config.xml:
 
 Usage
 -----
+```
+<script type="text/javascript" src="cdv-plugin-parse.js"></script>
+<script type="text/javascript>
+	parsePlugin.getInstallationId(function(id) {
+		alert(id);
+	}, function(e) {
+		alert('error');
+	});
+  
+	parsePlugin.getSubscriptions(function(subscriptions) {
+		alert(subscriptions);
+	}, function(e) {
+		alert('error');
+  });
+  
+	parsePlugin.subscribe('SampleChannel', function() {
+		alert('OK');
+	}, function(e) {
+		alert('error');
+  });
+  
+	parsePlugin.unsubscribe('SampleChannel', function(msg) {
+		alert('OK');
+	}, function(e) {
+		alert('error');
+	});
+```
 
 Compatibility
 -------------
