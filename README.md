@@ -48,6 +48,7 @@ Usage
 	}, function(e) {
 		alert('error');
 	});
+</script>
 ```
 
 Compatibility
