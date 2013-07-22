@@ -30,19 +30,19 @@ Usage
 	}, function(e) {
 		alert('error');
 	});
-  
+	
 	parsePlugin.getSubscriptions(function(subscriptions) {
 		alert(subscriptions);
 	}, function(e) {
 		alert('error');
-  });
-  
+	});
+	
 	parsePlugin.subscribe('SampleChannel', function() {
 		alert('OK');
 	}, function(e) {
 		alert('error');
-  });
-  
+	});
+	
 	parsePlugin.unsubscribe('SampleChannel', function(msg) {
 		alert('OK');
 	}, function(e) {
