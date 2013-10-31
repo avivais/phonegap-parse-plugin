@@ -39,3 +39,4 @@ var parsePlugin = {
 		);
 	}
 }
+module.exports = parsePlugin
