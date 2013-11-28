@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
-           id="org.apache.cordova.core.ParsePlugin"
+           id="org.apache.cordova.core.parseplugin"
       version="0.1.0">
     <name>phonegap-parse-plugin</name>
     <description>phonegap parse plugin</description>
 
-    <js-module src="cdv-plugin-parse.js" name="parsePlugin">
+    <js-module src="cdv-plugin-parse.js" name="ParsePlugin">
         <clobbers target="window.parsePlugin" />
     </js-module>
 
     <!-- android -->
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="org.apache.cordova.core.ParsePlugin">
+            <feature name="ParsePlugin">
                 <param name="android-package" value="org.apache.cordova.core.ParsePlugin" />
             </feature>
         </config-file>

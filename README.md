@@ -11,19 +11,14 @@ This plugin exposes the four native Android API push services to JS:
 * <a href="https://www.parse.com/docs/android/api/com/parse/PushService.html#subscribe(android.content.Context, java.lang.String, java.lang.Class, int)">subscribe</a>
 * <a href="https://www.parse.com/docs/android/api/com/parse/PushService.html#unsubscribe(android.content.Context, java.lang.String)">unsubscribe</a>
 
-Configuration
--------------
-Add the plugin to your res/xml/config.xml:
-```
-<feature name="org.apache.cordova.core.ParsePlugin">
-  <param name="android-package" value="org.apache.cordova.core.ParsePlugin" />
-</feature>
-```
+Installation
+------------
+phonegap local plugin add https://github.com/hyliker/phonegap-parse-plugin
+
 
 Usage
 -----
 ```
-<script type="text/javascript" src="cdv-plugin-parse.js"></script>
 <script type="text/javascript>
 	parsePlugin.getInstallationId(function(id) {
 		alert(id);
