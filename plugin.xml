@@ -6,7 +6,7 @@
     <name>phonegap-parse-plugin</name>
     <description>phonegap parse plugin</description>
 
-    <js-module src="cdv-plugin-parse.js" name="ParsePlugin">
+    <js-module src="www/cdv-plugin-parse.js" name="ParsePlugin">
         <clobbers target="window.parsePlugin" />
     </js-module>
 
@@ -18,7 +18,21 @@
             </feature>
         </config-file>
 
-        <source-file src="ParsePlugin.java" target-dir="src/org/apache/cordova/core" />      
+        <source-file src="src/android/ParsePlugin.java" target-dir="src/org/apache/cordova/core" />      
      </platform>
+
+    <!-- ios -->
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="ParsePlugin">
+                <param name="ios-package" value="CDVParsePlugin" />
+            </feature>
+        </config-file>
+        <header-file src="src/ios/CDVParsePlugin.h" />
+        <source-file src="src/ios/CDVParsePlugin.m" />
+
+        <!--<framework src="AssetsLibrary.framework" />-->
+        <!--<framework src="MobileCoreServices.framework" />-->
+    </platform>
           
 </plugin>
