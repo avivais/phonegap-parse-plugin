@@ -1,4 +1,14 @@
 var parsePlugin = {
+	initialize: function(appId, appKey, successCallback, errorCallback) {
+		cordova.exec(
+			successCallback,
+			errorCallback,
+			'ParsePlugin',
+			'initialize',
+			[appId, clientKey]
+		);
+	},
+
 	getInstallationId: function(successCallback, errorCallback) {
 		cordova.exec(
 			successCallback,
