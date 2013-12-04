@@ -23,6 +23,7 @@
 
     <!-- ios -->
     <platform name="ios">
+        <framework src="src/ios/Frameworks/Parse.framework" custom="true" />
         <config-file target="config.xml" parent="/*">
             <feature name="ParsePlugin">
                 <param name="ios-package" value="CDVParsePlugin" />
