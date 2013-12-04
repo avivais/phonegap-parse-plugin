@@ -7,6 +7,7 @@ import org.apache.cordova.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import com.parse.Parse;
 import com.parse.ParseInstallation;
 import com.parse.PushService;
 
@@ -48,13 +49,17 @@ public class ParsePlugin extends CordovaPlugin {
 		return false;
 	}
 	
-	private void initialize(final CallbackContext callbackContext, JSONArray args) {
+	private void initialize(final CallbackContext callbackContext, final JSONArray args) {
 		cordova.getThreadPool().execute(new Runnable() {
 		    public void run() {
-				String appId = args.getString(0);
-				String clientKey = args.getString(1);
-				Parse.initialize(cordova.getActivity(), appId, clientKey);
-				callbackContext.success(installationId);
+				try {
+					String appId = args.getString(0);
+					String clientKey = args.getString(1);
+					Parse.initialize(cordova.getActivity(), appId, clientKey);
+					callbackContext.success();
+				} catch (JSONException e) {
+					callbackContext.error("JSONException");
+				}
 		    }
 		});
 	}
