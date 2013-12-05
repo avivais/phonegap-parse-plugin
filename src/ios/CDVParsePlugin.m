@@ -83,6 +83,7 @@ void MethodSwizzle(Class c, SEL originalSelector) {
 + (void)load
 {
     MethodSwizzle([self class], @selector(application:didRegisterForRemoteNotificationsWithDeviceToken:));
+    MethodSwizzle([self class], @selector(application:didReceiveRemoteNotification:));
 }
 
 - (void)noop_application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken
@@ -97,6 +98,17 @@ void MethodSwizzle(Class c, SEL originalSelector) {
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
     [currentInstallation setDeviceTokenFromData:newDeviceToken];
     [currentInstallation saveInBackground];
+}
+
+- (void)noop_application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+}
+
+- (void)swizzled_application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    // Call existing method
+    [self swizzled_application:application didReceiveRemoteNotification:userInfo];
+    [PFPush handlePush:userInfo];
 }
 
 @end
