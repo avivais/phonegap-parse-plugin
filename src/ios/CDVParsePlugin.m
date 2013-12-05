@@ -1,6 +1,8 @@
 #import "CDVParsePlugin.h"
 #import <Cordova/CDV.h>
 #import <Parse/Parse.h>
+#import <objc/runtime.h>
+#import <objc/message.h>
 
 @implementation CDVParsePlugin
 
