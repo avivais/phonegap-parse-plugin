@@ -27,7 +27,7 @@ var parsePlugin = {
             'getInstallationObjectId',
             []
         );
-    }
+    },
 
     getSubscriptions: function(successCallback, errorCallback) {
         cordova.exec(
