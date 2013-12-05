@@ -36,4 +36,49 @@
     }];
 }
 
+- (void)getSubscriptions: (CDVInvokedUrlCommand *)command
+{
+	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Unsupported"];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+- (void)subscribe: (CDVInvokedUrlCommand *)command
+{
+    CDVPluginResult* pluginResult = nil;
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+        UIRemoteNotificationTypeBadge |
+        UIRemoteNotificationTypeAlert |
+        UIRemoteNotificationTypeSound];
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+- (void)unsubscribe: (CDVInvokedUrlCommand *)command
+{
+	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Unsupported"];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+@end
+
+@implementation AppDelegate (CDVParsePlugin)
+
++ (void)load
+{
+    Method original, swizzled;
+    original = class_getInstanceMethod(self, @selector(application:didRegisterForRemoteNotificationsWithDeviceToken:));
+    swizzled = class_getInstanceMethod(self, @selector(swizzled_application:didRegisterForRemoteNotificationsWithDeviceToken:));
+    method_exchangeImplementations(original, swizzled);
+}
+
+- (void)swizzled_application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken
+{
+    // Call existing method
+    [self swizzled_application:application didRegisterForRemoteNotificationsWithDeviceToken:newDeviceToken];
+    // Store the deviceToken in the current installation and save it to Parse.
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation setDeviceTokenFromData:newDeviceToken];
+    [currentInstallation saveInBackground];
+}
+
 @end
