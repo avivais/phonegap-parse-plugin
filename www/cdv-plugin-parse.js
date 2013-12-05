@@ -33,7 +33,7 @@ var parsePlugin = {
         cordova.exec(
             successCallback,
             errorCallback,
-            'org.apache.cordova.core.ParsePlugin',
+            'ParsePlugin',
             'getSubscriptions',
             []
         );
@@ -43,7 +43,7 @@ var parsePlugin = {
         cordova.exec(
             successCallback,
             errorCallback,
-            'org.apache.cordova.core.ParsePlugin',
+            'ParsePlugin',
             'subscribe',
             [ channel ]
         );
@@ -53,7 +53,7 @@ var parsePlugin = {
         cordova.exec(
             successCallback,
             errorCallback,
-            'org.apache.cordova.core.ParsePlugin',
+            'ParsePlugin',
             'unsubscribe',
             [ channel ]
         );
