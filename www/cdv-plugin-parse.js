@@ -28,35 +28,35 @@ var parsePlugin = {
 			[]
 		);
 	}
-	
-	//getSubscriptions: function(successCallback, errorCallback) {
-		//cordova.exec(
-			//successCallback,
-			//errorCallback,
-			//'org.apache.cordova.core.ParsePlugin',
-			//'getSubscriptions',
-			//[]
-		//);
-	//},
-	
-	//subscribe: function(channel, successCallback, errorCallback) {
-		//cordova.exec(
-			//successCallback,
-			//errorCallback,
-			//'org.apache.cordova.core.ParsePlugin',
-			//'subscribe',
-			//[ channel ]
-		//);
-	//},
-	
-	//unsubscribe: function(channel, successCallback, errorCallback) {
-		//cordova.exec(
-			//successCallback,
-			//errorCallback,
-			//'org.apache.cordova.core.ParsePlugin',
-			//'unsubscribe',
-			//[ channel ]
-		//);
-	//}
+
+	getSubscriptions: function(successCallback, errorCallback) {
+		cordova.exec(
+			successCallback,
+			errorCallback,
+			'org.apache.cordova.core.ParsePlugin',
+			'getSubscriptions',
+			[]
+		);
+	},
+
+	subscribe: function(channel, successCallback, errorCallback) {
+		cordova.exec(
+			successCallback,
+			errorCallback,
+			'org.apache.cordova.core.ParsePlugin',
+			'subscribe',
+			[ channel ]
+		);
+	},
+
+	unsubscribe: function(channel, successCallback, errorCallback) {
+		cordova.exec(
+			successCallback,
+			errorCallback,
+			'org.apache.cordova.core.ParsePlugin',
+			'unsubscribe',
+			[ channel ]
+		);
+	}
 };
 module.exports = parsePlugin;
