@@ -6,12 +6,12 @@
 
 - (void)initialize: (CDVInvokedUrlCommand*)command
 {
-	CDVPluginResult* pluginResult = nil;
-	NSString *appId = [command.arguments objectAtIndex:0];
-	NSString *clientKey = [command.arguments objectAtIndex:1];
-	[Parse setApplicationId:appId clientKey:clientKey];
-	pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-	[self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    CDVPluginResult* pluginResult = nil;
+    NSString *appId = [command.arguments objectAtIndex:0];
+    NSString *clientKey = [command.arguments objectAtIndex:1];
+    [Parse setApplicationId:appId clientKey:clientKey];
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 - (void)getInstallationId:(CDVInvokedUrlCommand*) command
@@ -38,7 +38,7 @@
 
 - (void)getSubscriptions: (CDVInvokedUrlCommand *)command
 {
-	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Unsupported"];
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Unsupported"];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
@@ -55,7 +55,7 @@
 
 - (void)unsubscribe: (CDVInvokedUrlCommand *)command
 {
-	CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Unsupported"];
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Unsupported"];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
