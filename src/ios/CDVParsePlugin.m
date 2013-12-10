@@ -40,24 +40,36 @@
 
 - (void)getSubscriptions: (CDVInvokedUrlCommand *)command
 {
-    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Unsupported"];
+    NSArray *channels = [PFInstallation currentInstallation].channels;
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsArray:channels];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 - (void)subscribe: (CDVInvokedUrlCommand *)command
 {
-    CDVPluginResult* pluginResult = nil;
+    // Not sure if this is necessary
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
         UIRemoteNotificationTypeBadge |
         UIRemoteNotificationTypeAlert |
         UIRemoteNotificationTypeSound];
+
+    CDVPluginResult* pluginResult = nil;
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    NSString *channel = [command.arguments objectAtIndex:0];
+    [currentInstallation addUniqueObject:channel forKey:@"channels"];
+    [currentInstallation saveInBackground];
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
 - (void)unsubscribe: (CDVInvokedUrlCommand *)command
 {
-    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:@"Unsupported"];
+    CDVPluginResult* pluginResult = nil;
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    NSString *channel = [command.arguments objectAtIndex:0];
+    [currentInstallation removeObject:channel forKey:@"channels"];
+    [currentInstallation saveInBackground];
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
