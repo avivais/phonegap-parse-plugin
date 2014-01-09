@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+           id="org.apache.cordova.core.parseplugin"
+      version="0.1.0">
+    <name>phonegap-parse-plugin</name>
+    <description>phonegap parse plugin</description>
+
+    <js-module src="www/cdv-plugin-parse.js" name="ParsePlugin">
+        <clobbers target="window.parsePlugin" />
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="ParsePlugin">
+                <param name="android-package" value="org.apache.cordova.core.ParsePlugin" />
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/parse/Parse-1.3.8.jar" target-dir="libs" framework="true" />
+        <source-file src="src/android/ParsePlugin.java" target-dir="src/org/apache/cordova/core" />      
+     </platform>
+
+    <!-- ios -->
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="ParsePlugin">
+                <param name="ios-package" value="CDVParsePlugin" />
+            </feature>
+        </config-file>
+        <header-file src="src/ios/CDVParsePlugin.h" />
+        <source-file src="src/ios/CDVParsePlugin.m" />
+
+        <!--<framework src="AssetsLibrary.framework" />-->
+        <!--<framework src="MobileCoreServices.framework" />-->
+        <framework src="AudioToolbox.framework" />
+        <framework src="CFNetwork.framework" />
+        <framework src="CoreGraphics.framework" />
+        <framework src="CoreLocation.framework" />
+        <framework src="libz.1.1.3.dylib" />
+        <framework src="MobileCoreServices.framework" />
+        <framework src="QuartzCore.framework" />
+        <framework src="Security.framework" />
+        <framework src="StoreKit.framework" />
+        <framework src="SystemConfiguration.framework" />
+        <framework src="src/ios/Frameworks/Parse.framework" custom="true" />
+    </platform>
+          
+</plugin>
