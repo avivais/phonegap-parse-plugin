@@ -13,7 +13,13 @@ This plugin exposes the four native Android API push services to JS:
 
 Installation
 ------------
+
+Pick one of these two commands:
+
+```
 phonegap local plugin add https://github.com/benjie/phonegap-parse-plugin
+cordova plugin add https://github.com/benjie/phonegap-parse-plugin
+```
 
 
 Usage
