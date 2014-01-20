@@ -17,6 +17,34 @@
                 <param name="android-package" value="org.apache.cordova.core.ParsePlugin" />
             </feature>
         </config-file>
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+          <service android:name="com.parse.PushService" />
+          <receiver android:name="com.parse.ParseBroadcastReceiver">
+            <intent-filter>
+              <action android:name="android.intent.action.BOOT_COMPLETED" />
+              <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+          </receiver>
+          <receiver android:name="com.parse.GcmBroadcastReceiver"
+              android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+              <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+              <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+              <category android:name="$PACKAGE_NAME" />
+            </intent-filter>
+          </receiver>
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+          <uses-permission android:name="android.permission.INTERNET" />
+          <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+          <uses-permission android:name="android.permission.WAKE_LOCK" />
+          <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+          <uses-permission android:name="android.permission.VIBRATE" />
+          <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+          <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+          <permission android:protectionLevel="signature" android:name="$PACKAGE_NAME.permission.C2D_MESSAGE" />
+          <uses-permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE" />
+        </config-file>
 
         <source-file src="src/android/parse/Parse-1.3.8.jar" target-dir="libs" framework="true" />
         <source-file src="src/android/ParsePlugin.java" target-dir="src/org/apache/cordova/core" />      
