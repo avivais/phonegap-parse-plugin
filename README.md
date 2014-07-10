@@ -21,6 +21,42 @@ phonegap local plugin add https://github.com/benjie/phonegap-parse-plugin
 cordova plugin add https://github.com/benjie/phonegap-parse-plugin
 ```
 
+Initial Setup
+-------------
+
+Once the device is ready, call ```parsePlugin.initialize()```. This will register the device with Parse, you should see this reflected in your Parse control panel. After this runs you probably want to save the installationID somewhere, and perhaps subscribe the user to a few channels. Here is a contrived example.
+
+```
+parsePlugin.initialize(appId, clientKey, function() {
+
+	parsePlugin.subscribe('SampleChannel', function() {
+		
+		parsePlugin.getInstallationId(function(id) {
+		
+			/**
+			 * Now you can construct an object and save it to your own services, or Parse, and corrilate users to parse installations
+			 * 
+			 var install_data = {
+			  	installation_id: id,
+			  	channels: ['SampleChannel']
+			 }
+			 *
+			 */
+
+		}, function(e) {
+			alert('error');
+		});
+
+	}, function(e) {
+		alert('error');
+	});
+	
+}, function(e) {
+	alert('error');
+});
+
+```
+
 
 Usage
 -----
