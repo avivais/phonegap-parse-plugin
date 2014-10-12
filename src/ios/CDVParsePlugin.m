@@ -48,10 +48,13 @@
 - (void)subscribe: (CDVInvokedUrlCommand *)command
 {
     // Not sure if this is necessary
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
-        UIRemoteNotificationTypeBadge |
-        UIRemoteNotificationTypeAlert |
-        UIRemoteNotificationTypeSound];
+    UIUserNotificationSettings *settings =
+    [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert |
+                                                 UIUserNotificationTypeBadge |
+                                                 UIUserNotificationTypeSound
+                                      categories:nil];
+    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
 
     CDVPluginResult* pluginResult = nil;
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
