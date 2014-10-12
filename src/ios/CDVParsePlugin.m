@@ -48,7 +48,7 @@
 - (void)subscribe: (CDVInvokedUrlCommand *)command
 {
     // Not sure if this is necessary
-    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+    if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]) {
         UIUserNotificationSettings *settings =
         [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert |
                                                      UIUserNotificationTypeBadge |
