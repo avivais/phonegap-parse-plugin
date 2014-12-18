@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
-           id="org.apache.cordova.core.parseplugin"
+           id="com.parse.cordova.core.pushplugin"
       version="0.1.0">
     <name>phonegap-parse-plugin</name>
     <description>phonegap parse plugin</description>
