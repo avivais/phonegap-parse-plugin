@@ -72,6 +72,8 @@
         <framework src="Security.framework" />
         <framework src="StoreKit.framework" />
         <framework src="SystemConfiguration.framework" />
+
+        <framework src="src/ios/Frameworks/Bolts.framework" custom="true" />
         <framework src="src/ios/Frameworks/Parse.framework" custom="true" />
     </platform>
           
