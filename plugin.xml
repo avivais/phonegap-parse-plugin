@@ -47,7 +47,7 @@
         </config-file>
 
         <source-file src="src/android/parse/Parse-1.3.8.jar" target-dir="libs" framework="true" />
-        <source-file src="src/android/ParsePlugin.java" target-dir="src/org/apache/cordova/core" />      
+        <source-file src="src/android/ParsePlugin.java" target-dir="src/org/apache/cordova/core" />
      </platform>
 
     <!-- ios -->
@@ -66,15 +66,16 @@
         <framework src="CFNetwork.framework" />
         <framework src="CoreGraphics.framework" />
         <framework src="CoreLocation.framework" />
-        <framework src="libz.1.1.3.dylib" />
         <framework src="MobileCoreServices.framework" />
         <framework src="QuartzCore.framework" />
         <framework src="Security.framework" />
         <framework src="StoreKit.framework" />
         <framework src="SystemConfiguration.framework" />
 
+        <framework src="libz.dylib" />
+
         <framework src="src/ios/Frameworks/Bolts.framework" custom="true" />
         <framework src="src/ios/Frameworks/Parse.framework" custom="true" />
     </platform>
-          
+
 </plugin>
