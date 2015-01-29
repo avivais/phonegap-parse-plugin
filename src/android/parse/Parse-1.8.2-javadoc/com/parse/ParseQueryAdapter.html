@@ -1,0 +1,893 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!-- NewPage -->
+<html lang="en">
+<head>
+<title>ParseQueryAdapter</title>
+<link rel="stylesheet" type="text/css" href="../../stylesheet.css" title="Style">
+</head>
+<body>
+<script type="text/javascript"><!--
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="ParseQueryAdapter";
+    }
+//-->
+</script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
+<!-- ========= START OF TOP NAVBAR ======= -->
+<div class="topNav"><a name="navbar_top">
+<!--   -->
+</a><a href="#skip-navbar_top" title="Skip navigation links"></a><a name="navbar_top_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../com/parse/package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="class-use/ParseQueryAdapter.html">Use</a></li>
+<li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../index-all.html">Index</a></li>
+<li><a href="../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../../com/parse/ParseQuery.CachePolicy.html" title="enum in com.parse"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../com/parse/ParseQueryAdapter.OnQueryLoadListener.html" title="interface in com.parse"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../index.html?com/parse/ParseQueryAdapter.html" target="_top">Frames</a></li>
+<li><a href="ParseQueryAdapter.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+<li><a href="../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_top");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li><a href="#nested_class_summary">Nested</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#constructor_summary">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#constructor_detail">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_top">
+<!--   -->
+</a></div>
+<!-- ========= END OF TOP NAVBAR ========= -->
+<!-- ======== START OF CLASS DATA ======== -->
+<div class="header">
+<div class="subTitle">com.parse</div>
+<h2 title="Class ParseQueryAdapter" class="title">Class ParseQueryAdapter&lt;T extends <a href="../../com/parse/ParseObject.html" title="class in com.parse">ParseObject</a>&gt;</h2>
+</div>
+<div class="contentContainer">
+<ul class="inheritance">
+<li><a href="http://developer.android.com/reference/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></li>
+<li>
+<ul class="inheritance">
+<li><a href="http://developer.android.com/reference/android/widget/BaseAdapter.html?is-external=true" title="class or interface in android.widget">android.widget.BaseAdapter</a></li>
+<li>
+<ul class="inheritance">
+<li>com.parse.ParseQueryAdapter&lt;T&gt;</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="description">
+<ul class="blockList">
+<li class="blockList">
+<dl>
+<dt>All Implemented Interfaces:</dt>
+<dd><a href="http://developer.android.com/reference/android/widget/Adapter.html?is-external=true" title="class or interface in android.widget">Adapter</a>, <a href="http://developer.android.com/reference/android/widget/ListAdapter.html?is-external=true" title="class or interface in android.widget">ListAdapter</a>, <a href="http://developer.android.com/reference/android/widget/SpinnerAdapter.html?is-external=true" title="class or interface in android.widget">SpinnerAdapter</a></dd>
+</dl>
+<hr>
+<br>
+<pre>public class <span class="strong">ParseQueryAdapter&lt;T extends <a href="../../com/parse/ParseObject.html" title="class in com.parse">ParseObject</a>&gt;</span>
+extends <a href="http://developer.android.com/reference/android/widget/BaseAdapter.html?is-external=true" title="class or interface in android.widget">BaseAdapter</a></pre>
+<div class="block">A ParseQueryAdapter handles the fetching of objects by page, and displaying objects as views in a
+ ListView.
+ <p>
+ This class is highly configurable, but also intended to be easy to get started with. See below
+ for an example of using a ParseQueryAdapter inside an Activity's <code>onCreate</code>:
+ 
+ <pre>
+ final ParseQueryAdapter adapter = new ParseQueryAdapter(this, &quot;TestObject&quot;);
+ adapter.setTextKey(&quot;name&quot;);
+ 
+ ListView listView = (ListView) findViewById(R.id.listview);
+ listView.setAdapter(adapter);
+ </pre>
+ 
+ Below, an example showing off the level of configuration available with this class:
+ 
+ <pre>
+ // Instantiate a QueryFactory to define the ParseQuery to be used for fetching items in this
+ // Adapter.
+ ParseQueryAdapter.QueryFactory&lt;ParseObject&gt; factory =
+     new ParseQueryAdapter.QueryFactory&lt;ParseObject&gt;() {
+       public ParseQuery create() {
+         ParseQuery query = new ParseQuery(&quot;Customer&quot;);
+         query.whereEqualTo(&quot;activated&quot;, true);
+         query.orderByDescending(&quot;moneySpent&quot;);
+         return query;
+       }
+     };
+ 
+ // Pass the factory into the ParseQueryAdapter's constructor.
+ ParseQueryAdapter&lt;ParseObject&gt; adapter = new ParseQueryAdapter&lt;ParseObject&gt;(this, factory);
+ adapter.setTextKey(&quot;name&quot;);
+ 
+ // Perhaps set a callback to be fired upon successful loading of a new set of ParseObjects.
+ adapter.addOnQueryLoadListener(new OnQueryLoadListener&lt;ParseObject&gt;() {
+   public void onLoading() {
+     // Trigger any &quot;loading&quot; UI
+   }
+ 
+   public void onLoaded(List&lt;ParseObject&gt; objects, ParseException e) {
+     // Execute any post-loading logic, hide &quot;loading&quot; UI
+   }
+ });
+ 
+ // Attach it to your ListView, as in the example above
+ ListView listView = (ListView) findViewById(R.id.listview);
+ listView.setAdapter(adapter);
+ </pre></div>
+</li>
+</ul>
+</div>
+<div class="summary">
+<ul class="blockList">
+<li class="blockList">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<ul class="blockList">
+<li class="blockList"><a name="nested_class_summary">
+<!--   -->
+</a>
+<h3>Nested Class Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
+<caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Class and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static interface&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../com/parse/ParseQueryAdapter.OnQueryLoadListener.html" title="interface in com.parse">ParseQueryAdapter.OnQueryLoadListener</a>&lt;<a href="../../com/parse/ParseQueryAdapter.OnQueryLoadListener.html" title="type parameter in ParseQueryAdapter.OnQueryLoadListener">T</a> extends <a href="../../com/parse/ParseObject.html" title="class in com.parse">ParseObject</a>&gt;</strong></code>
+<div class="block">Implement with logic that is called before and after objects are fetched from Parse by the
+ adapter.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static interface&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../com/parse/ParseQueryAdapter.QueryFactory.html" title="interface in com.parse">ParseQueryAdapter.QueryFactory</a>&lt;<a href="../../com/parse/ParseQueryAdapter.QueryFactory.html" title="type parameter in ParseQueryAdapter.QueryFactory">T</a> extends <a href="../../com/parse/ParseObject.html" title="class in com.parse">ParseObject</a>&gt;</strong></code>
+<div class="block">Implement to construct your own custom <a href="../../com/parse/ParseQuery.html" title="class in com.parse"><code>ParseQuery</code></a> for fetching objects.</div>
+</td>
+</tr>
+</table>
+</li>
+</ul>
+<!-- =========== FIELD SUMMARY =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="field_summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a name="fields_inherited_from_class_android.widget.Adapter">
+<!--   -->
+</a>
+<h3>Fields inherited from interface&nbsp;android.widget.<a href="http://developer.android.com/reference/android/widget/Adapter.html?is-external=true" title="class or interface in android.widget">Adapter</a></h3>
+<code><a href="http://developer.android.com/reference/android/widget/Adapter.html?is-external=true#IGNORE_ITEM_VIEW_TYPE" title="class or interface in android.widget">IGNORE_ITEM_VIEW_TYPE</a>, <a href="http://developer.android.com/reference/android/widget/Adapter.html?is-external=true#NO_SELECTION" title="class or interface in android.widget">NO_SELECTION</a></code></li>
+</ul>
+</li>
+</ul>
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<ul class="blockList">
+<li class="blockList"><a name="constructor_summary">
+<!--   -->
+</a>
+<h3>Constructor Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colOne" scope="col">Constructor and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colOne"><code><strong><a href="../../com/parse/ParseQueryAdapter.html#ParseQueryAdapter(android.content.Context, java.lang.Class)">ParseQueryAdapter</a></strong>(<a href="http://developer.android.com/reference/android/content/Context.html?is-external=true" title="class or interface in android.content">Context</a>&nbsp;context,
+                 <a href="http://developer.android.com/reference/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="../../com/parse/ParseObject.html" title="class in com.parse">ParseObject</a>&gt;&nbsp;clazz)</code>
+<div class="block">Constructs a ParseQueryAdapter.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><code><strong><a href="../../com/parse/ParseQueryAdapter.html#ParseQueryAdapter(android.content.Context, java.lang.Class, int)">ParseQueryAdapter</a></strong>(<a href="http://developer.android.com/reference/android/content/Context.html?is-external=true" title="class or interface in android.content">Context</a>&nbsp;context,
+                 <a href="http://developer.android.com/reference/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="../../com/parse/ParseObject.html" title="class in com.parse">ParseObject</a>&gt;&nbsp;clazz,
+                 int&nbsp;itemViewResource)</code>
+<div class="block">Constructs a ParseQueryAdapter.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><code><strong><a href="../../com/parse/ParseQueryAdapter.html#ParseQueryAdapter(android.content.Context, com.parse.ParseQueryAdapter.QueryFactory)">ParseQueryAdapter</a></strong>(<a href="http://developer.android.com/reference/android/content/Context.html?is-external=true" title="class or interface in android.content">Context</a>&nbsp;context,
+                 <a href="../../com/parse/ParseQueryAdapter.QueryFactory.html" title="interface in com.parse">ParseQueryAdapter.QueryFactory</a>&lt;<a href="../../com/parse/ParseQueryAdapter.html" title="type parameter in ParseQueryAdapter">T</a>&gt;&nbsp;queryFactory)</code>
+<div class="block">Constructs a ParseQueryAdapter.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><code><strong><a href="../../com/parse/ParseQueryAdapter.html#ParseQueryAdapter(android.content.Context, com.parse.ParseQueryAdapter.QueryFactory, int)">ParseQueryAdapter</a></strong>(<a href="http://developer.android.com/reference/android/content/Context.html?is-external=true" title="class or interface in android.content">Context</a>&nbsp;context,
+                 <a href="../../com/parse/ParseQueryAdapter.QueryFactory.html" title="interface in com.parse">ParseQueryAdapter.QueryFactory</a>&lt;<a href="../../com/parse/ParseQueryAdapter.html" title="type parameter in ParseQueryAdapter">T</a>&gt;&nbsp;queryFactory,
+                 int&nbsp;itemViewResource)</code>
+<div class="block">Constructs a ParseQueryAdapter.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><code><strong><a href="../../com/parse/ParseQueryAdapter.html#ParseQueryAdapter(android.content.Context, java.lang.String)">ParseQueryAdapter</a></strong>(<a href="http://developer.android.com/reference/android/content/Context.html?is-external=true" title="class or interface in android.content">Context</a>&nbsp;context,
+                 <a href="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;className)</code>
+<div class="block">Constructs a ParseQueryAdapter.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><code><strong><a href="../../com/parse/ParseQueryAdapter.html#ParseQueryAdapter(android.content.Context, java.lang.String, int)">ParseQueryAdapter</a></strong>(<a href="http://developer.android.com/reference/android/content/Context.html?is-external=true" title="class or interface in android.content">Context</a>&nbsp;context,
+                 <a href="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;className,
+                 int&nbsp;itemViewResource)</code>
+<div class="block">Constructs a ParseQueryAdapter.</div>
+</td>
+</tr>
+</table>
+</li>
+</ul>
+<!-- ========== METHOD SUMMARY =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="method_summary">
+<!--   -->
+</a>
+<h3>Method Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<caption><span>Methods</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../com/parse/ParseQueryAdapter.html#addOnQueryLoadListener(com.parse.ParseQueryAdapter.OnQueryLoadListener)">addOnQueryLoadListener</a></strong>(<a href="../../com/parse/ParseQueryAdapter.OnQueryLoadListener.html" title="interface in com.parse">ParseQueryAdapter.OnQueryLoadListener</a>&lt;<a href="../../com/parse/ParseQueryAdapter.html" title="type parameter in ParseQueryAdapter">T</a>&gt;&nbsp;listener)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../com/parse/ParseQueryAdapter.html#clear()">clear</a></strong>()</code>
+<div class="block">Remove all elements from the list.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="http://developer.android.com/reference/android/content/Context.html?is-external=true" title="class or interface in android.content">Context</a></code></td>
+<td class="colLast"><code><strong><a href="../../com/parse/ParseQueryAdapter.html#getContext()">getContext</a></strong>()</code>
+<div class="block">Return the context provided by the <code>Activity</code> utilizing this <code>ParseQueryAdapter</code>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><strong><a href="../../com/parse/ParseQueryAdapter.html#getCount()">getCount</a></strong>()</code>
+<div class="block">Overrides <a href="http://developer.android.com/reference/android/widget/Adapter.html?is-external=true" title="class or interface in android.widget"><code>Adapter</code></a>'s <a href="../../com/parse/ParseQueryAdapter.html#getCount()"><code>ParseQueryAdapter.getCount()</code></a> method to return the number of cells to
+ display.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../com/parse/ParseQueryAdapter.html" title="type parameter in ParseQueryAdapter">T</a></code></td>
+<td class="colLast"><code><strong><a href="../../com/parse/ParseQueryAdapter.html#getItem(int)">getItem</a></strong>(int&nbsp;index)</code></td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><code><strong><a href="../../com/parse/ParseQueryAdapter.html#getItemId(int)">getItemId</a></strong>(int&nbsp;position)</code></td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="http://developer.android.com/reference/android/view/View.html?is-external=true" title="class or interface in android.view">View</a></code></td>
+<td class="colLast"><code><strong><a href="../../com/parse/ParseQueryAdapter.html#getItemView(T, android.view.View, android.view.ViewGroup)">getItemView</a></strong>(<a href="../../com/parse/ParseQueryAdapter.html" title="type parameter in ParseQueryAdapter">T</a>&nbsp;object,
+           <a href="http://developer.android.com/reference/android/view/View.html?is-external=true" title="class or interface in android.view">View</a>&nbsp;v,
+           <a href="http://developer.android.com/reference/android/view/ViewGroup.html?is-external=true" title="class or interface in android.view">ViewGroup</a>&nbsp;parent)</code>
+<div class="block">Override this method to customize each cell given a <a href="../../com/parse/ParseObject.html" title="class in com.parse"><code>ParseObject</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><strong><a href="../../com/parse/ParseQueryAdapter.html#getItemViewType(int)">getItemViewType</a></strong>(int&nbsp;position)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="http://developer.android.com/reference/android/view/View.html?is-external=true" title="class or interface in android.view">View</a></code></td>
+<td class="colLast"><code><strong><a href="../../com/parse/ParseQueryAdapter.html#getNextPageView(android.view.View, android.view.ViewGroup)">getNextPageView</a></strong>(<a href="http://developer.android.com/reference/android/view/View.html?is-external=true" title="class or interface in android.view">View</a>&nbsp;v,
+               <a href="http://developer.android.com/reference/android/view/ViewGroup.html?is-external=true" title="class or interface in android.view">ViewGroup</a>&nbsp;parent)</code>
+<div class="block">Override this method to customize the "Load Next Page" cell, visible when pagination is turned
+ on and there may be more results to display.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><strong><a href="../../com/parse/ParseQueryAdapter.html#getObjectsPerPage()">getObjectsPerPage</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="http://developer.android.com/reference/android/view/View.html?is-external=true" title="class or interface in android.view">View</a></code></td>
+<td class="colLast"><code><strong><a href="../../com/parse/ParseQueryAdapter.html#getView(int, android.view.View, android.view.ViewGroup)">getView</a></strong>(int&nbsp;position,
+       <a href="http://developer.android.com/reference/android/view/View.html?is-external=true" title="class or interface in android.view">View</a>&nbsp;convertView,
+       <a href="http://developer.android.com/reference/android/view/ViewGroup.html?is-external=true" title="class or interface in android.view">ViewGroup</a>&nbsp;parent)</code>
+<div class="block">The base class, <code>Adapter</code>, defines a <code>getView</code> method intended to display data at
+ the specified position in the data set.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><strong><a href="../../com/parse/ParseQueryAdapter.html#getViewTypeCount()">getViewTypeCount</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../com/parse/ParseQueryAdapter.html#loadNextPage()">loadNextPage</a></strong>()</code>
+<div class="block">Loads the next page of objects, appends to table, and notifies the UI that the model has
+ changed.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../com/parse/ParseQueryAdapter.html#loadObjects()">loadObjects</a></strong>()</code>
+<div class="block">Clears the table and loads the first page of objects asynchronously.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../com/parse/ParseQueryAdapter.html#registerDataSetObserver(android.database.DataSetObserver)">registerDataSetObserver</a></strong>(<a href="http://developer.android.com/reference/android/database/DataSetObserver.html?is-external=true" title="class or interface in android.database">DataSetObserver</a>&nbsp;observer)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../com/parse/ParseQueryAdapter.html#removeOnQueryLoadListener(com.parse.ParseQueryAdapter.OnQueryLoadListener)">removeOnQueryLoadListener</a></strong>(<a href="../../com/parse/ParseQueryAdapter.OnQueryLoadListener.html" title="interface in com.parse">ParseQueryAdapter.OnQueryLoadListener</a>&lt;<a href="../../com/parse/ParseQueryAdapter.html" title="type parameter in ParseQueryAdapter">T</a>&gt;&nbsp;listener)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../com/parse/ParseQueryAdapter.html#setAutoload(boolean)">setAutoload</a></strong>(boolean&nbsp;autoload)</code>
+<div class="block">Enable or disable the automatic loading of results upon attachment to an <code>AdapterView</code>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../com/parse/ParseQueryAdapter.html#setImageKey(java.lang.String)">setImageKey</a></strong>(<a href="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;imageKey)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../com/parse/ParseQueryAdapter.html#setObjectsPerPage(int)">setObjectsPerPage</a></strong>(int&nbsp;objectsPerPage)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><code><strong><a href="../../com/parse/ParseQueryAdapter.html#setPageOnQuery(int, com.parse.ParseQuery)">setPageOnQuery</a></strong>(int&nbsp;page,
+              <a href="../../com/parse/ParseQuery.html" title="class in com.parse">ParseQuery</a>&lt;<a href="../../com/parse/ParseQueryAdapter.html" title="type parameter in ParseQueryAdapter">T</a>&gt;&nbsp;query)</code>
+<div class="block">Override this method to manually paginate the provided <code>ParseQuery</code>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../com/parse/ParseQueryAdapter.html#setPaginationEnabled(boolean)">setPaginationEnabled</a></strong>(boolean&nbsp;paginationEnabled)</code>
+<div class="block">Enable or disable pagination of results.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../com/parse/ParseQueryAdapter.html#setPlaceholder(android.graphics.drawable.Drawable)">setPlaceholder</a></strong>(<a href="http://developer.android.com/reference/android/graphics/drawable/Drawable.html?is-external=true" title="class or interface in android.graphics.drawable">Drawable</a>&nbsp;placeholder)</code>
+<div class="block">Sets a placeholder image to be used when fetching data for each item in the <code>AdapterView</code>
+ .</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../com/parse/ParseQueryAdapter.html#setTextKey(java.lang.String)">setTextKey</a></strong>(<a href="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;textKey)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../com/parse/ParseQueryAdapter.html#unregisterDataSetObserver(android.database.DataSetObserver)">unregisterDataSetObserver</a></strong>(<a href="http://developer.android.com/reference/android/database/DataSetObserver.html?is-external=true" title="class or interface in android.database">DataSetObserver</a>&nbsp;observer)</code>&nbsp;</td>
+</tr>
+</table>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_android.widget.BaseAdapter">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;android.widget.<a href="http://developer.android.com/reference/android/widget/BaseAdapter.html?is-external=true" title="class or interface in android.widget">BaseAdapter</a></h3>
+<code><a href="http://developer.android.com/reference/android/widget/BaseAdapter.html?is-external=true#areAllItemsEnabled()" title="class or interface in android.widget">areAllItemsEnabled</a>, <a href="http://developer.android.com/reference/android/widget/BaseAdapter.html?is-external=true#getDropDownView(int, android.view.View, android.view.ViewGroup)" title="class or interface in android.widget">getDropDownView</a>, <a href="http://developer.android.com/reference/android/widget/BaseAdapter.html?is-external=true#hasStableIds()" title="class or interface in android.widget">hasStableIds</a>, <a href="http://developer.android.com/reference/android/widget/BaseAdapter.html?is-external=true#isEmpty()" title="class or interface in android.widget">isEmpty</a>, <a href="http://developer.android.com/reference/android/widget/BaseAdapter.html?is-external=true#isEnabled(int)" title="class or interface in android.widget">isEnabled</a>, <a href="http://developer.android.com/reference/android/widget/BaseAdapter.html?is-external=true#notifyDataSetChanged()" title="class or interface in android.widget">notifyDataSetChanged</a>, <a href="http://developer.android.com/reference/android/widget/BaseAdapter.html?is-external=true#notifyDataSetInvalidated()" title="class or interface in android.widget">notifyDataSetInvalidated</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_Object">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;<a href="http://developer.android.com/reference/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<code><a href="http://developer.android.com/reference/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://developer.android.com/reference/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://developer.android.com/reference/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://developer.android.com/reference/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://developer.android.com/reference/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://developer.android.com/reference/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://developer.android.com/reference/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://developer.android.com/reference/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://developer.android.com/reference/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://developer.android.com/reference/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://developer.android.com/reference/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="details">
+<ul class="blockList">
+<li class="blockList">
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+<ul class="blockList">
+<li class="blockList"><a name="constructor_detail">
+<!--   -->
+</a>
+<h3>Constructor Detail</h3>
+<a name="ParseQueryAdapter(android.content.Context, java.lang.Class)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ParseQueryAdapter</h4>
+<pre>public&nbsp;ParseQueryAdapter(<a href="http://developer.android.com/reference/android/content/Context.html?is-external=true" title="class or interface in android.content">Context</a>&nbsp;context,
+                 <a href="http://developer.android.com/reference/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="../../com/parse/ParseObject.html" title="class in com.parse">ParseObject</a>&gt;&nbsp;clazz)</pre>
+<div class="block">Constructs a ParseQueryAdapter. Given a ParseObject subclass, this adapter will fetch and
+ display all ParseObjects of the specified class, ordered by creation time.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>context</code> - The activity utilizing this adapter.</dd><dd><code>clazz</code> - The <code>ParseObject</code> subclass type to fetch and display.</dd></dl>
+</li>
+</ul>
+<a name="ParseQueryAdapter(android.content.Context, java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ParseQueryAdapter</h4>
+<pre>public&nbsp;ParseQueryAdapter(<a href="http://developer.android.com/reference/android/content/Context.html?is-external=true" title="class or interface in android.content">Context</a>&nbsp;context,
+                 <a href="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;className)</pre>
+<div class="block">Constructs a ParseQueryAdapter. Given a ParseObject subclass, this adapter will fetch and
+ display all ParseObjects of the specified class, ordered by creation time.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>context</code> - The activity utilizing this adapter.</dd><dd><code>className</code> - The name of the Parse class of <code>ParseObject</code>s to display.</dd></dl>
+</li>
+</ul>
+<a name="ParseQueryAdapter(android.content.Context, java.lang.Class, int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ParseQueryAdapter</h4>
+<pre>public&nbsp;ParseQueryAdapter(<a href="http://developer.android.com/reference/android/content/Context.html?is-external=true" title="class or interface in android.content">Context</a>&nbsp;context,
+                 <a href="http://developer.android.com/reference/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="../../com/parse/ParseObject.html" title="class in com.parse">ParseObject</a>&gt;&nbsp;clazz,
+                 int&nbsp;itemViewResource)</pre>
+<div class="block">Constructs a ParseQueryAdapter. Given a ParseObject subclass, this adapter will fetch and
+ display all ParseObjects of the specified class, ordered by creation time.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>context</code> - The activity utilizing this adapter.</dd><dd><code>clazz</code> - The <code>ParseObject</code> subclass type to fetch and display.</dd><dd><code>itemViewResource</code> - A resource id that represents the layout for an item in the AdapterView.</dd></dl>
+</li>
+</ul>
+<a name="ParseQueryAdapter(android.content.Context, java.lang.String, int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ParseQueryAdapter</h4>
+<pre>public&nbsp;ParseQueryAdapter(<a href="http://developer.android.com/reference/android/content/Context.html?is-external=true" title="class or interface in android.content">Context</a>&nbsp;context,
+                 <a href="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;className,
+                 int&nbsp;itemViewResource)</pre>
+<div class="block">Constructs a ParseQueryAdapter. Given a ParseObject subclass, this adapter will fetch and
+ display all ParseObjects of the specified class, ordered by creation time.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>context</code> - The activity utilizing this adapter.</dd><dd><code>className</code> - The name of the Parse class of <code>ParseObject</code>s to display.</dd><dd><code>itemViewResource</code> - A resource id that represents the layout for an item in the AdapterView.</dd></dl>
+</li>
+</ul>
+<a name="ParseQueryAdapter(android.content.Context, com.parse.ParseQueryAdapter.QueryFactory)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ParseQueryAdapter</h4>
+<pre>public&nbsp;ParseQueryAdapter(<a href="http://developer.android.com/reference/android/content/Context.html?is-external=true" title="class or interface in android.content">Context</a>&nbsp;context,
+                 <a href="../../com/parse/ParseQueryAdapter.QueryFactory.html" title="interface in com.parse">ParseQueryAdapter.QueryFactory</a>&lt;<a href="../../com/parse/ParseQueryAdapter.html" title="type parameter in ParseQueryAdapter">T</a>&gt;&nbsp;queryFactory)</pre>
+<div class="block">Constructs a ParseQueryAdapter. Allows the caller to define further constraints on the
+ <a href="../../com/parse/ParseQuery.html" title="class in com.parse"><code>ParseQuery</code></a> to be used when fetching items from Parse.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>context</code> - The activity utilizing this adapter.</dd><dd><code>queryFactory</code> - A <a href="../../com/parse/ParseQueryAdapter.QueryFactory.html" title="interface in com.parse"><code>ParseQueryAdapter.QueryFactory</code></a> to build a <a href="../../com/parse/ParseQuery.html" title="class in com.parse"><code>ParseQuery</code></a> for fetching objects.</dd></dl>
+</li>
+</ul>
+<a name="ParseQueryAdapter(android.content.Context, com.parse.ParseQueryAdapter.QueryFactory, int)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>ParseQueryAdapter</h4>
+<pre>public&nbsp;ParseQueryAdapter(<a href="http://developer.android.com/reference/android/content/Context.html?is-external=true" title="class or interface in android.content">Context</a>&nbsp;context,
+                 <a href="../../com/parse/ParseQueryAdapter.QueryFactory.html" title="interface in com.parse">ParseQueryAdapter.QueryFactory</a>&lt;<a href="../../com/parse/ParseQueryAdapter.html" title="type parameter in ParseQueryAdapter">T</a>&gt;&nbsp;queryFactory,
+                 int&nbsp;itemViewResource)</pre>
+<div class="block">Constructs a ParseQueryAdapter. Allows the caller to define further constraints on the
+ <a href="../../com/parse/ParseQuery.html" title="class in com.parse"><code>ParseQuery</code></a> to be used when fetching items from Parse.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>context</code> - The activity utilizing this adapter.</dd><dd><code>queryFactory</code> - A <a href="../../com/parse/ParseQueryAdapter.QueryFactory.html" title="interface in com.parse"><code>ParseQueryAdapter.QueryFactory</code></a> to build a <a href="../../com/parse/ParseQuery.html" title="class in com.parse"><code>ParseQuery</code></a> for fetching objects.</dd><dd><code>itemViewResource</code> - A resource id that represents the layout for an item in the AdapterView.</dd></dl>
+</li>
+</ul>
+</li>
+</ul>
+<!-- ============ METHOD DETAIL ========== -->
+<ul class="blockList">
+<li class="blockList"><a name="method_detail">
+<!--   -->
+</a>
+<h3>Method Detail</h3>
+<a name="getContext()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getContext</h4>
+<pre>public&nbsp;<a href="http://developer.android.com/reference/android/content/Context.html?is-external=true" title="class or interface in android.content">Context</a>&nbsp;getContext()</pre>
+<div class="block">Return the context provided by the <code>Activity</code> utilizing this <code>ParseQueryAdapter</code>.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>The activity utilizing this adapter.</dd></dl>
+</li>
+</ul>
+<a name="getItem(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getItem</h4>
+<pre>public&nbsp;<a href="../../com/parse/ParseQueryAdapter.html" title="type parameter in ParseQueryAdapter">T</a>&nbsp;getItem(int&nbsp;index)</pre>
+</li>
+</ul>
+<a name="getItemId(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getItemId</h4>
+<pre>public&nbsp;long&nbsp;getItemId(int&nbsp;position)</pre>
+</li>
+</ul>
+<a name="getItemViewType(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getItemViewType</h4>
+<pre>public&nbsp;int&nbsp;getItemViewType(int&nbsp;position)</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://developer.android.com/reference/android/widget/Adapter.html?is-external=true#getItemViewType(int)" title="class or interface in android.widget">getItemViewType</a></code>&nbsp;in interface&nbsp;<code><a href="http://developer.android.com/reference/android/widget/Adapter.html?is-external=true" title="class or interface in android.widget">Adapter</a></code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://developer.android.com/reference/android/widget/BaseAdapter.html?is-external=true#getItemViewType(int)" title="class or interface in android.widget">getItemViewType</a></code>&nbsp;in class&nbsp;<code><a href="http://developer.android.com/reference/android/widget/BaseAdapter.html?is-external=true" title="class or interface in android.widget">BaseAdapter</a></code></dd>
+</dl>
+</li>
+</ul>
+<a name="getViewTypeCount()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getViewTypeCount</h4>
+<pre>public&nbsp;int&nbsp;getViewTypeCount()</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://developer.android.com/reference/android/widget/Adapter.html?is-external=true#getViewTypeCount()" title="class or interface in android.widget">getViewTypeCount</a></code>&nbsp;in interface&nbsp;<code><a href="http://developer.android.com/reference/android/widget/Adapter.html?is-external=true" title="class or interface in android.widget">Adapter</a></code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://developer.android.com/reference/android/widget/BaseAdapter.html?is-external=true#getViewTypeCount()" title="class or interface in android.widget">getViewTypeCount</a></code>&nbsp;in class&nbsp;<code><a href="http://developer.android.com/reference/android/widget/BaseAdapter.html?is-external=true" title="class or interface in android.widget">BaseAdapter</a></code></dd>
+</dl>
+</li>
+</ul>
+<a name="registerDataSetObserver(android.database.DataSetObserver)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>registerDataSetObserver</h4>
+<pre>public&nbsp;void&nbsp;registerDataSetObserver(<a href="http://developer.android.com/reference/android/database/DataSetObserver.html?is-external=true" title="class or interface in android.database">DataSetObserver</a>&nbsp;observer)</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://developer.android.com/reference/android/widget/Adapter.html?is-external=true#registerDataSetObserver(android.database.DataSetObserver)" title="class or interface in android.widget">registerDataSetObserver</a></code>&nbsp;in interface&nbsp;<code><a href="http://developer.android.com/reference/android/widget/Adapter.html?is-external=true" title="class or interface in android.widget">Adapter</a></code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://developer.android.com/reference/android/widget/BaseAdapter.html?is-external=true#registerDataSetObserver(android.database.DataSetObserver)" title="class or interface in android.widget">registerDataSetObserver</a></code>&nbsp;in class&nbsp;<code><a href="http://developer.android.com/reference/android/widget/BaseAdapter.html?is-external=true" title="class or interface in android.widget">BaseAdapter</a></code></dd>
+</dl>
+</li>
+</ul>
+<a name="unregisterDataSetObserver(android.database.DataSetObserver)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>unregisterDataSetObserver</h4>
+<pre>public&nbsp;void&nbsp;unregisterDataSetObserver(<a href="http://developer.android.com/reference/android/database/DataSetObserver.html?is-external=true" title="class or interface in android.database">DataSetObserver</a>&nbsp;observer)</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="http://developer.android.com/reference/android/widget/Adapter.html?is-external=true#unregisterDataSetObserver(android.database.DataSetObserver)" title="class or interface in android.widget">unregisterDataSetObserver</a></code>&nbsp;in interface&nbsp;<code><a href="http://developer.android.com/reference/android/widget/Adapter.html?is-external=true" title="class or interface in android.widget">Adapter</a></code></dd>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="http://developer.android.com/reference/android/widget/BaseAdapter.html?is-external=true#unregisterDataSetObserver(android.database.DataSetObserver)" title="class or interface in android.widget">unregisterDataSetObserver</a></code>&nbsp;in class&nbsp;<code><a href="http://developer.android.com/reference/android/widget/BaseAdapter.html?is-external=true" title="class or interface in android.widget">BaseAdapter</a></code></dd>
+</dl>
+</li>
+</ul>
+<a name="clear()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clear</h4>
+<pre>public&nbsp;void&nbsp;clear()</pre>
+<div class="block">Remove all elements from the list.</div>
+</li>
+</ul>
+<a name="loadObjects()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>loadObjects</h4>
+<pre>public&nbsp;void&nbsp;loadObjects()</pre>
+<div class="block">Clears the table and loads the first page of objects asynchronously. This method is called
+ automatically when this <code>Adapter</code> is attached to an <code>AdapterView</code>.
+ <p/>
+ <code>loadObjects()</code> should only need to be called if <a href="../../com/parse/ParseQueryAdapter.html#setAutoload(boolean)"><code>ParseQueryAdapter.setAutoload(boolean)</code></a> is set to
+ <code>false</code>.</div>
+</li>
+</ul>
+<a name="loadNextPage()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>loadNextPage</h4>
+<pre>public&nbsp;void&nbsp;loadNextPage()</pre>
+<div class="block">Loads the next page of objects, appends to table, and notifies the UI that the model has
+ changed.</div>
+</li>
+</ul>
+<a name="getCount()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getCount</h4>
+<pre>public&nbsp;int&nbsp;getCount()</pre>
+<div class="block">Overrides <a href="http://developer.android.com/reference/android/widget/Adapter.html?is-external=true" title="class or interface in android.widget"><code>Adapter</code></a>'s <a href="../../com/parse/ParseQueryAdapter.html#getCount()"><code>ParseQueryAdapter.getCount()</code></a> method to return the number of cells to
+ display. If pagination is turned on, this count will include an extra +1 count for the
+ pagination cell row.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>The number of cells to be displayed by the ListView.</dd></dl>
+</li>
+</ul>
+<a name="getItemView(com.parse.ParseObject,android.view.View,android.view.ViewGroup)">
+<!--   -->
+</a><a name="getItemView(T, android.view.View, android.view.ViewGroup)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getItemView</h4>
+<pre>public&nbsp;<a href="http://developer.android.com/reference/android/view/View.html?is-external=true" title="class or interface in android.view">View</a>&nbsp;getItemView(<a href="../../com/parse/ParseQueryAdapter.html" title="type parameter in ParseQueryAdapter">T</a>&nbsp;object,
+               <a href="http://developer.android.com/reference/android/view/View.html?is-external=true" title="class or interface in android.view">View</a>&nbsp;v,
+               <a href="http://developer.android.com/reference/android/view/ViewGroup.html?is-external=true" title="class or interface in android.view">ViewGroup</a>&nbsp;parent)</pre>
+<div class="block">Override this method to customize each cell given a <a href="../../com/parse/ParseObject.html" title="class in com.parse"><code>ParseObject</code></a>.
+ <p/>
+ If a view is not provided, a default view will be created based upon
+ <code>android.R.layout.activity_list_item</code>.
+ <p/>
+ This method expects a <code>TextView</code> with id <code>android.R.id.text1</code> in your object views.
+ If <a href="../../com/parse/ParseQueryAdapter.html#setImageKey(java.lang.String)"><code>ParseQueryAdapter.setImageKey(String)</code></a> was used, this method also expects an <code>ImageView</code> with id
+ <code>android.R.id.icon</code>.
+ <p/>
+ This method displays the text value specified by the text key (set via
+ <a href="../../com/parse/ParseQueryAdapter.html#setTextKey(java.lang.String)"><code>ParseQueryAdapter.setTextKey(String)</code></a>) and an image (described by a <a href="../../com/parse/ParseFile.html" title="class in com.parse"><code>ParseFile</code></a>, under the key set
+ via <a href="../../com/parse/ParseQueryAdapter.html#setImageKey(java.lang.String)"><code>ParseQueryAdapter.setImageKey(String)</code></a>) if applicable. If the text key is not set, the value for
+ <a href="../../com/parse/ParseObject.html#getObjectId()"><code>ParseObject.getObjectId()</code></a> will be displayed instead.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>object</code> - The ParseObject associated with this item.</dd><dd><code>v</code> - The <code>View</code> associated with this row. This view, if non-null, is being recycled
+          and intended to be used for displaying this item.</dd><dd><code>parent</code> - The parent that this view will eventually be attached to</dd>
+<dt><span class="strong">Returns:</span></dt><dd>The customized view displaying the ParseObject's information.</dd></dl>
+</li>
+</ul>
+<a name="getNextPageView(android.view.View, android.view.ViewGroup)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getNextPageView</h4>
+<pre>public&nbsp;<a href="http://developer.android.com/reference/android/view/View.html?is-external=true" title="class or interface in android.view">View</a>&nbsp;getNextPageView(<a href="http://developer.android.com/reference/android/view/View.html?is-external=true" title="class or interface in android.view">View</a>&nbsp;v,
+                   <a href="http://developer.android.com/reference/android/view/ViewGroup.html?is-external=true" title="class or interface in android.view">ViewGroup</a>&nbsp;parent)</pre>
+<div class="block">Override this method to customize the "Load Next Page" cell, visible when pagination is turned
+ on and there may be more results to display.
+ <p/>
+ This method expects a <code>TextView</code> with id <code>android.R.id.text1</code>.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>v</code> - The view object associated with this row + type (a "Next Page" view, instead of an
+          "Item" view).</dd><dd><code>parent</code> - The parent that this view will eventually be attached to</dd>
+<dt><span class="strong">Returns:</span></dt><dd>The view object that allows the user to paginate.</dd></dl>
+</li>
+</ul>
+<a name="getView(int, android.view.View, android.view.ViewGroup)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getView</h4>
+<pre>public final&nbsp;<a href="http://developer.android.com/reference/android/view/View.html?is-external=true" title="class or interface in android.view">View</a>&nbsp;getView(int&nbsp;position,
+           <a href="http://developer.android.com/reference/android/view/View.html?is-external=true" title="class or interface in android.view">View</a>&nbsp;convertView,
+           <a href="http://developer.android.com/reference/android/view/ViewGroup.html?is-external=true" title="class or interface in android.view">ViewGroup</a>&nbsp;parent)</pre>
+<div class="block">The base class, <code>Adapter</code>, defines a <code>getView</code> method intended to display data at
+ the specified position in the data set. We override it here in order to toggle between
+ <a href="../../com/parse/ParseQueryAdapter.html#getNextPageView(android.view.View, android.view.ViewGroup)"><code>ParseQueryAdapter.getNextPageView(View, ViewGroup)</code></a> and
+ <a href="../../com/parse/ParseQueryAdapter.html#getItemView(T, android.view.View, android.view.ViewGroup)"><code>ParseQueryAdapter.getItemView(ParseObject, View, ViewGroup)</code></a> depending on the value of
+ <a href="../../com/parse/ParseQueryAdapter.html#getItemViewType(int)"><code>ParseQueryAdapter.getItemViewType(int)</code></a>.</div>
+</li>
+</ul>
+<a name="setPageOnQuery(int, com.parse.ParseQuery)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setPageOnQuery</h4>
+<pre>protected&nbsp;void&nbsp;setPageOnQuery(int&nbsp;page,
+                  <a href="../../com/parse/ParseQuery.html" title="class in com.parse">ParseQuery</a>&lt;<a href="../../com/parse/ParseQueryAdapter.html" title="type parameter in ParseQueryAdapter">T</a>&gt;&nbsp;query)</pre>
+<div class="block">Override this method to manually paginate the provided <code>ParseQuery</code>. By default, this
+ method will set the <code>limit</code> value to <a href="../../com/parse/ParseQueryAdapter.html#getObjectsPerPage()"><code>ParseQueryAdapter.getObjectsPerPage()</code></a> and the <code>skip</code>
+ value to <a href="../../com/parse/ParseQueryAdapter.html#getObjectsPerPage()"><code>ParseQueryAdapter.getObjectsPerPage()</code></a> * <code>page</code>.
+ <p>
+ Overriding this method will not be necessary, in most cases.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>page</code> - the page number of results to fetch from Parse.</dd><dd><code>query</code> - the <a href="../../com/parse/ParseQuery.html" title="class in com.parse"><code>ParseQuery</code></a> used to fetch items from Parse. This query will be mutated and
+          used in its mutated form.</dd></dl>
+</li>
+</ul>
+<a name="setTextKey(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setTextKey</h4>
+<pre>public&nbsp;void&nbsp;setTextKey(<a href="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;textKey)</pre>
+</li>
+</ul>
+<a name="setImageKey(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setImageKey</h4>
+<pre>public&nbsp;void&nbsp;setImageKey(<a href="http://developer.android.com/reference/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;imageKey)</pre>
+</li>
+</ul>
+<a name="setObjectsPerPage(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setObjectsPerPage</h4>
+<pre>public&nbsp;void&nbsp;setObjectsPerPage(int&nbsp;objectsPerPage)</pre>
+</li>
+</ul>
+<a name="getObjectsPerPage()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getObjectsPerPage</h4>
+<pre>public&nbsp;int&nbsp;getObjectsPerPage()</pre>
+</li>
+</ul>
+<a name="setPaginationEnabled(boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setPaginationEnabled</h4>
+<pre>public&nbsp;void&nbsp;setPaginationEnabled(boolean&nbsp;paginationEnabled)</pre>
+<div class="block">Enable or disable pagination of results. Defaults to true.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>paginationEnabled</code> - Defaults to true.</dd></dl>
+</li>
+</ul>
+<a name="setPlaceholder(android.graphics.drawable.Drawable)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setPlaceholder</h4>
+<pre>public&nbsp;void&nbsp;setPlaceholder(<a href="http://developer.android.com/reference/android/graphics/drawable/Drawable.html?is-external=true" title="class or interface in android.graphics.drawable">Drawable</a>&nbsp;placeholder)</pre>
+<div class="block">Sets a placeholder image to be used when fetching data for each item in the <code>AdapterView</code>
+ . Will not be used if <a href="../../com/parse/ParseQueryAdapter.html#setImageKey(java.lang.String)"><code>ParseQueryAdapter.setImageKey(String)</code></a> was not used to define which images to
+ display.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>placeholder</code> - A <code>Drawable</code> to be displayed while the remote image data is being fetched. This
+          value can be null, and <code>ImageView</code>s in this AdapterView will simply be blank
+          while data is being fetched.</dd></dl>
+</li>
+</ul>
+<a name="setAutoload(boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setAutoload</h4>
+<pre>public&nbsp;void&nbsp;setAutoload(boolean&nbsp;autoload)</pre>
+<div class="block">Enable or disable the automatic loading of results upon attachment to an <code>AdapterView</code>.
+ Defaults to true.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>autoload</code> - Defaults to true.</dd></dl>
+</li>
+</ul>
+<a name="addOnQueryLoadListener(com.parse.ParseQueryAdapter.OnQueryLoadListener)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addOnQueryLoadListener</h4>
+<pre>public&nbsp;void&nbsp;addOnQueryLoadListener(<a href="../../com/parse/ParseQueryAdapter.OnQueryLoadListener.html" title="interface in com.parse">ParseQueryAdapter.OnQueryLoadListener</a>&lt;<a href="../../com/parse/ParseQueryAdapter.html" title="type parameter in ParseQueryAdapter">T</a>&gt;&nbsp;listener)</pre>
+</li>
+</ul>
+<a name="removeOnQueryLoadListener(com.parse.ParseQueryAdapter.OnQueryLoadListener)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>removeOnQueryLoadListener</h4>
+<pre>public&nbsp;void&nbsp;removeOnQueryLoadListener(<a href="../../com/parse/ParseQueryAdapter.OnQueryLoadListener.html" title="interface in com.parse">ParseQueryAdapter.OnQueryLoadListener</a>&lt;<a href="../../com/parse/ParseQueryAdapter.html" title="type parameter in ParseQueryAdapter">T</a>&gt;&nbsp;listener)</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<!-- ========= END OF CLASS DATA ========= -->
+<!-- ======= START OF BOTTOM NAVBAR ====== -->
+<div class="bottomNav"><a name="navbar_bottom">
+<!--   -->
+</a><a href="#skip-navbar_bottom" title="Skip navigation links"></a><a name="navbar_bottom_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../com/parse/package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="class-use/ParseQueryAdapter.html">Use</a></li>
+<li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../index-all.html">Index</a></li>
+<li><a href="../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../../com/parse/ParseQuery.CachePolicy.html" title="enum in com.parse"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../com/parse/ParseQueryAdapter.OnQueryLoadListener.html" title="interface in com.parse"><span class="strong">Next Class</span></a></li>
+</ul>
+<ul class="navList">
+<li><a href="../../index.html?com/parse/ParseQueryAdapter.html" target="_top">Frames</a></li>
+<li><a href="ParseQueryAdapter.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+<li><a href="../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_bottom");
+  if(window==top) {
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
+  }
+  //-->
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li><a href="#nested_class_summary">Nested</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#constructor_summary">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method_summary">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#constructor_detail">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method_detail">Method</a></li>
+</ul>
+</div>
+<a name="skip-navbar_bottom">
+<!--   -->
+</a></div>
+<!-- ======== END OF BOTTOM NAVBAR ======= -->
+</body>
+</html>
