@@ -53,7 +53,7 @@
         
         <info><![CDATA[
 A couple of changes are needed to receive push notifications when the app is not
-running:
+running on Android:
 
 1. Edit your AndroidManifest.xml and add the following as an attribute on your
 application tag:
