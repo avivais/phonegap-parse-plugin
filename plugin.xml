@@ -49,6 +49,36 @@
 		<source-file src="src/android/parse/bolts-android-1.1.4.jar" target-dir="libs" framework="true" />
         <source-file src="src/android/parse/Parse-1.8.2.jar" target-dir="libs" framework="true" />
         <source-file src="src/android/ParsePlugin.java" target-dir="src/org/apache/cordova/core" />
+        <!--<source-file src="src/android/ParseApplication.java" target-dir="src/org/apache/cordova/core" />-->
+        
+        <info><![CDATA[
+A couple of changes are needed to receive push notifications when the app is not
+running:
+
+1. Edit your AndroidManifest.xml and add the following as an attribute on your
+application tag:
+
+android:name="org.apache.cordova.core.ParseApplication"
+
+If you already have an application class (this is not common), you will need to
+merge the code in ParseApplication.java with it instead.
+
+2. Edit src/android/ParseApplication.java and change the following:
+
+<%=app.id%>: Replace with your package identifier (i.e. com.example.appname)
+<%=app.parse.app_id%>: Replace with your Parse App ID
+<%=app.parse.client_key%>: Replace with your Parse Client Key
+
+3. Edit plugin.xml and uncomment this line:
+
+<!--<source-file src="src/android/ParseApplication.java" target-dir="src/org/apache/cordova/core" />-->
+
+Without these changes, your app will crash when receiving push notifications
+when it is not running.
+
+If you have a build system, you may be able to automate this.
+]]>
+        </info>
      </platform>
 
     <!-- ios -->
