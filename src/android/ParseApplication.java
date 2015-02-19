@@ -7,7 +7,7 @@ import com.parse.Parse;
 import com.parse.ParseInstallation;
 import com.parse.PushService;
 
-import <%=app.id%>.CordovaApp;
+import <%=app.id%>.MainActivity;
 
 public class ParseApplication extends Application 
 {
@@ -26,7 +26,7 @@ public class ParseApplication extends Application
 		super.onCreate();
 		// register device for parse
 		Parse.initialize(this, "<%=app.parse.app_id%>", "<%=app.parse.client_key%>");
-		PushService.setDefaultPushCallback(this, CordovaApp.class);
+		PushService.setDefaultPushCallback(this, MainActivity.class);
 		ParseInstallation.getCurrentInstallation().saveInBackground();
 	}
 }
