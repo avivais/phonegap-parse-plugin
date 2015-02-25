@@ -321,9 +321,23 @@ NS_REQUIRES_PROPERTY_DEFINITIONS
 - (void)saveInBackgroundWithTarget:(id)target selector:(SEL)selector;
 
 /*!
- @see saveEventually:
+ @abstract Saves this object to the server at some unspecified time in the future,
+ even if Parse is currently inaccessible.
+
+ @discussion Use this when you may not have a solid network connection, and don't need to know when the save completes.
+ If there is some problem with the object such that it can't be saved, it will be silently discarded. If the save
+ completes successfully while the object is still in memory, then callback will be called.
+
+ Objects saved with this method will be stored locally in an on-disk cache until they can be delivered to Parse.
+ They will be sent immediately if possible. Otherwise, they will be sent the next time a network connection is
+ available. Objects saved this way will persist even after the app is closed, in which case they will be sent the
+ next time the app is opened. If more than 10MB of data is waiting to be sent, subsequent calls to <saveEventually>
+ will cause old saves to be silently discarded until the connection can be re-established, and the queued objects
+ can be saved.
+
+ @returns The task that encapsulates the work being done.
  */
-- (void)saveEventually;
+- (BFTask *)saveEventually;
 
 /*!
  @abstract Saves this object to the server at some unspecified time in the future,
@@ -791,8 +805,10 @@ NS_REQUIRES_PROPERTY_DEFINITIONS
  next time the app is opened. If more than 10MB of <saveEventually> or <deleteEventually> commands are waiting
  to be sent, subsequent calls to <saveEventually> or <deleteEventually> will cause old requests to be silently discarded
  until the connection can be re-established, and the queued requests can go through.
+
+ @returns The task that encapsulates the work being done.
  */
-- (void)deleteEventually;
+- (BFTask *)deleteEventually;
 
 ///--------------------------------------
 /// @name Dirtiness

@@ -36,7 +36,7 @@
 
  @returns A `PFQuery` object.
  */
-+ (PFQuery *)queryWithClassName:(NSString *)className;
++ (instancetype)queryWithClassName:(NSString *)className;
 
 /*!
  @abstract Creates a PFQuery with the constraints given by predicate.
@@ -60,7 +60,7 @@
  @param className The class to query on.
  @param predicate The predicate to create conditions from.
  */
-+ (PFQuery *)queryWithClassName:(NSString *)className predicate:(NSPredicate *)predicate;
++ (instancetype)queryWithClassName:(NSString *)className predicate:(NSPredicate *)predicate;
 
 /*!
  Initializes the query with a class name.
@@ -84,8 +84,10 @@
  the included object are also fetch.
 
  @param key The key to load child <PFObject>s for.
+
+ @returns The same instance of `PFQuery` as the receiver. This allows method chaining.
  */
-- (void)includeKey:(NSString *)key;
+- (instancetype)includeKey:(NSString *)key;
 
 /*!
  @abstract Make the query restrict the fields of the returned <PFObject>s to include only the provided keys.
@@ -93,38 +95,48 @@
  @discussion If this is called multiple times, then all of the keys specified in each of the calls will be included.
 
  @param keys The keys to include in the result.
+
+ @returns The same instance of `PFQuery` as the receiver. This allows method chaining.
  */
-- (void)selectKeys:(NSArray *)keys;
+- (instancetype)selectKeys:(NSArray *)keys;
 
 /*!
  @abstract Add a constraint that requires a particular key exists.
 
  @param key The key that should exist.
+
+ @returns The same instance of `PFQuery` as the receiver. This allows method chaining.
  */
-- (void)whereKeyExists:(NSString *)key;
+- (instancetype)whereKeyExists:(NSString *)key;
 
 /*!
  @abstract Add a constraint that requires a key not exist.
 
  @param key The key that should not exist.
+
+ @returns The same instance of `PFQuery` as the receiver. This allows method chaining.
  */
-- (void)whereKeyDoesNotExist:(NSString *)key;
+- (instancetype)whereKeyDoesNotExist:(NSString *)key;
 
 /*!
  @abstract Add a constraint to the query that requires a particular key's object to be equal to the provided object.
 
  @param key The key to be constrained.
  @param object The object that must be equalled.
+
+ @returns The same instance of `PFQuery` as the receiver. This allows method chaining.
  */
-- (void)whereKey:(NSString *)key equalTo:(id)object;
+- (instancetype)whereKey:(NSString *)key equalTo:(id)object;
 
 /*!
  @abstract Add a constraint to the query that requires a particular key's object to be less than the provided object.
 
  @param key The key to be constrained.
  @param object The object that provides an upper bound.
+
+ @returns The same instance of `PFQuery` as the receiver. This allows method chaining.
  */
-- (void)whereKey:(NSString *)key lessThan:(id)object;
+- (instancetype)whereKey:(NSString *)key lessThan:(id)object;
 
 /*!
  @abstract Add a constraint to the query that requires a particular key's object
@@ -132,8 +144,10 @@
 
  @param key The key to be constrained.
  @param object The object that must be equalled.
+
+ @returns The same instance of `PFQuery` as the receiver. This allows method chaining.
  */
-- (void)whereKey:(NSString *)key lessThanOrEqualTo:(id)object;
+- (instancetype)whereKey:(NSString *)key lessThanOrEqualTo:(id)object;
 
 /*!
  @abstract Add a constraint to the query that requires a particular key's object
@@ -141,8 +155,10 @@
 
  @param key The key to be constrained.
  @param object The object that must be equalled.
+
+ @returns The same instance of `PFQuery` as the receiver. This allows method chaining.
  */
-- (void)whereKey:(NSString *)key greaterThan:(id)object;
+- (instancetype)whereKey:(NSString *)key greaterThan:(id)object;
 
 /*!
  @abstract Add a constraint to the query that requires a particular key's
@@ -150,8 +166,10 @@
 
  @param key The key to be constrained.
  @param object The object that must be equalled.
+
+ @returns The same instance of `PFQuery` as the receiver. This allows method chaining.
  */
-- (void)whereKey:(NSString *)key greaterThanOrEqualTo:(id)object;
+- (instancetype)whereKey:(NSString *)key greaterThanOrEqualTo:(id)object;
 
 /*!
  @abstract Add a constraint to the query that requires a particular key's object
@@ -159,8 +177,10 @@
 
  @param key The key to be constrained.
  @param object The object that must not be equalled.
+
+ @returns The same instance of `PFQuery` as the receiver. This allows method chaining.
  */
-- (void)whereKey:(NSString *)key notEqualTo:(id)object;
+- (instancetype)whereKey:(NSString *)key notEqualTo:(id)object;
 
 /*!
  @abstract Add a constraint to the query that requires a particular key's object
@@ -168,8 +188,10 @@
 
  @param key The key to be constrained.
  @param array The possible values for the key's object.
+
+ @returns The same instance of `PFQuery` as the receiver. This allows method chaining.
  */
-- (void)whereKey:(NSString *)key containedIn:(NSArray *)array;
+- (instancetype)whereKey:(NSString *)key containedIn:(NSArray *)array;
 
 /*!
  @abstract Add a constraint to the query that requires a particular key's object
@@ -177,8 +199,10 @@
 
  @param key The key to be constrained.
  @param array The list of values the key's object should not be.
+
+ @returns The same instance of `PFQuery` as the receiver. This allows method chaining.
  */
-- (void)whereKey:(NSString *)key notContainedIn:(NSArray *)array;
+- (instancetype)whereKey:(NSString *)key notContainedIn:(NSArray *)array;
 
 /*!
  @abstract Add a constraint to the query that requires a particular key's array
@@ -186,8 +210,10 @@
 
  @param key The key to be constrained.
  @param array The array of values to search for.
+
+ @returns The same instance of `PFQuery` as the receiver. This allows method chaining.
  */
-- (void)whereKey:(NSString *)key containsAllObjectsInArray:(NSArray *)array;
+- (instancetype)whereKey:(NSString *)key containsAllObjectsInArray:(NSArray *)array;
 
 ///--------------------------------------
 /// @name Adding Location Constraints
@@ -202,8 +228,10 @@
 
  @param key The key to be constrained.
  @param geopoint The reference point represented as a <PFGeoPoint>.
+
+ @returns The same instance of `PFQuery` as the receiver. This allows method chaining.
  */
-- (void)whereKey:(NSString *)key nearGeoPoint:(PFGeoPoint *)geopoint;
+- (instancetype)whereKey:(NSString *)key nearGeoPoint:(PFGeoPoint *)geopoint;
 
 /*!
  @abstract Add a constraint to the query that requires a particular key's coordinates (specified via <PFGeoPoint>)
@@ -215,8 +243,10 @@
  @param key The key to be constrained.
  @param geopoint The reference point represented as a <PFGeoPoint>.
  @param maxDistance Maximum distance in miles.
+
+ @returns The same instance of `PFQuery` as the receiver. This allows method chaining.
  */
-- (void)whereKey:(NSString *)key nearGeoPoint:(PFGeoPoint *)geopoint withinMiles:(double)maxDistance;
+- (instancetype)whereKey:(NSString *)key nearGeoPoint:(PFGeoPoint *)geopoint withinMiles:(double)maxDistance;
 
 /*!
  @abstract Add a constraint to the query that requires a particular key's coordinates (specified via <PFGeoPoint>)
@@ -228,8 +258,10 @@
  @param key The key to be constrained.
  @param geopoint The reference point represented as a <PFGeoPoint>.
  @param maxDistance Maximum distance in kilometers.
+
+ @returns The same instance of `PFQuery` as the receiver. This allows method chaining.
  */
-- (void)whereKey:(NSString *)key nearGeoPoint:(PFGeoPoint *)geopoint withinKilometers:(double)maxDistance;
+- (instancetype)whereKey:(NSString *)key nearGeoPoint:(PFGeoPoint *)geopoint withinKilometers:(double)maxDistance;
 
 /*!
  Add a constraint to the query that requires a particular key's coordinates (specified via <PFGeoPoint>) be near
@@ -239,8 +271,10 @@
  @param key The key to be constrained.
  @param geopoint The reference point as a <PFGeoPoint>.
  @param maxDistance Maximum distance in radians.
+
+ @returns The same instance of `PFQuery` as the receiver. This allows method chaining.
  */
-- (void)whereKey:(NSString *)key nearGeoPoint:(PFGeoPoint *)geopoint withinRadians:(double)maxDistance;
+- (instancetype)whereKey:(NSString *)key nearGeoPoint:(PFGeoPoint *)geopoint withinRadians:(double)maxDistance;
 
 /*!
  @abstract Add a constraint to the query that requires a particular key's coordinates (specified via <PFGeoPoint>) be
@@ -249,8 +283,10 @@
  @param key The key to be constrained.
  @param southwest The lower-left inclusive corner of the box.
  @param northeast The upper-right inclusive corner of the box.
+
+ @returns The same instance of `PFQuery` as the receiver. This allows method chaining.
  */
-- (void)whereKey:(NSString *)key withinGeoBoxFromSouthwest:(PFGeoPoint *)southwest toNortheast:(PFGeoPoint *)northeast;
+- (instancetype)whereKey:(NSString *)key withinGeoBoxFromSouthwest:(PFGeoPoint *)southwest toNortheast:(PFGeoPoint *)northeast;
 
 ///--------------------------------------
 /// @name Adding String Constraints
@@ -263,8 +299,10 @@
 
  @param key The key that the string to match is stored in.
  @param regex The regular expression pattern to match.
+
+ @returns The same instance of `PFQuery` as the receiver. This allows method chaining.
  */
-- (void)whereKey:(NSString *)key matchesRegex:(NSString *)regex;
+- (instancetype)whereKey:(NSString *)key matchesRegex:(NSString *)regex;
 
 /*!
  @abstract Add a regular expression constraint for finding string values that match the provided regular expression.
@@ -276,8 +314,10 @@
  @param modifiers Any of the following supported PCRE modifiers:
  - `i` - Case insensitive search
  - `m` - Search across multiple lines of input
+
+ @returns The same instance of `PFQuery` as the receiver. This allows method chaining.
  */
-- (void)whereKey:(NSString *)key matchesRegex:(NSString *)regex modifiers:(NSString *)modifiers;
+- (instancetype)whereKey:(NSString *)key matchesRegex:(NSString *)regex modifiers:(NSString *)modifiers;
 
 /*!
  @abstract Add a constraint for finding string values that contain a provided substring.
@@ -286,8 +326,10 @@
 
  @param key The key that the string to match is stored in.
  @param substring The substring that the value must contain.
+
+ @returns The same instance of `PFQuery` as the receiver. This allows method chaining.
  */
-- (void)whereKey:(NSString *)key containsString:(NSString *)substring;
+- (instancetype)whereKey:(NSString *)key containsString:(NSString *)substring;
 
 /*!
  @abstract Add a constraint for finding string values that start with a provided prefix.
@@ -296,8 +338,10 @@
 
  @param key The key that the string to match is stored in.
  @param prefix The substring that the value must start with.
+
+ @returns The same instance of `PFQuery` as the receiver. This allows method chaining.
  */
-- (void)whereKey:(NSString *)key hasPrefix:(NSString *)prefix;
+- (instancetype)whereKey:(NSString *)key hasPrefix:(NSString *)prefix;
 
 /*!
  @abstract Add a constraint for finding string values that end with a provided suffix.
@@ -306,8 +350,10 @@
 
  @param key The key that the string to match is stored in.
  @param suffix The substring that the value must end with.
+
+ @returns The same instance of `PFQuery` as the receiver. This allows method chaining.
  */
-- (void)whereKey:(NSString *)key hasSuffix:(NSString *)suffix;
+- (instancetype)whereKey:(NSString *)key hasSuffix:(NSString *)suffix;
 
 ///--------------------------------------
 /// @name Adding Subqueries
@@ -320,7 +366,7 @@
 
  @returns An instance of `PFQuery` that is the `or` of the passed in queries.
  */
-+ (PFQuery *)orQueryWithSubqueries:(NSArray *)queries;
++ (instancetype)orQueryWithSubqueries:(NSArray *)queries;
 
 /*!
  @abstract Adds a constraint that requires that a key's value matches a value in another key
@@ -329,8 +375,10 @@
  @param key The key that the value is stored.
  @param otherKey The key in objects in the returned by the sub query whose value should match.
  @param query The query to run.
+
+ @returns The same instance of `PFQuery` as the receiver. This allows method chaining.
  */
-- (void)whereKey:(NSString *)key matchesKey:(NSString *)otherKey inQuery:(PFQuery *)query;
+- (instancetype)whereKey:(NSString *)key matchesKey:(NSString *)otherKey inQuery:(PFQuery *)query;
 
 /*!
  @abstract Adds a constraint that requires that a key's value `NOT` match a value in another key
@@ -339,8 +387,10 @@
  @param key The key that the value is stored.
  @param otherKey The key in objects in the returned by the sub query whose value should match.
  @param query The query to run.
+
+ @returns The same instance of `PFQuery` as the receiver. This allows method chaining.
  */
-- (void)whereKey:(NSString *)key doesNotMatchKey:(NSString *)otherKey inQuery:(PFQuery *)query;
+- (instancetype)whereKey:(NSString *)key doesNotMatchKey:(NSString *)otherKey inQuery:(PFQuery *)query;
 
 /*!
  @abstract Add a constraint that requires that a key's value matches a `PFQuery` constraint.
@@ -349,8 +399,10 @@
 
  @param key The key that the value is stored in
  @param query The query the value should match
+
+ @returns The same instance of `PFQuery` as the receiver. This allows method chaining.
  */
-- (void)whereKey:(NSString *)key matchesQuery:(PFQuery *)query;
+- (instancetype)whereKey:(NSString *)key matchesQuery:(PFQuery *)query;
 
 /*!
  @abstract Add a constraint that requires that a key's value to not match a `PFQuery` constraint.
@@ -359,8 +411,10 @@
 
  @param key The key that the value is stored in
  @param query The query the value should not match
+
+ @returns The same instance of `PFQuery` as the receiver. This allows method chaining.
  */
-- (void)whereKey:(NSString *)key doesNotMatchQuery:(PFQuery *)query;
+- (instancetype)whereKey:(NSString *)key doesNotMatchQuery:(PFQuery *)query;
 
 ///--------------------------------------
 /// @name Sorting
@@ -370,47 +424,55 @@
  @abstract Sort the results in *ascending* order with the given key.
 
  @param key The key to order by.
+
+ @returns The same instance of `PFQuery` as the receiver. This allows method chaining.
  */
-- (void)orderByAscending:(NSString *)key;
+- (instancetype)orderByAscending:(NSString *)key;
 
 /*!
  @abstract Additionally sort in *ascending* order by the given key.
 
  @discussion The previous keys provided will precedence over this key.
 
- @param key The key to order bye
+ @param key The key to order by.
  */
-- (void)addAscendingOrder:(NSString *)key;
+- (instancetype)addAscendingOrder:(NSString *)key;
 
 /*!
  @abstract Sort the results in *descending* order with the given key.
 
  @param key The key to order by.
+
+ @returns The same instance of `PFQuery` as the receiver. This allows method chaining.
  */
-- (void)orderByDescending:(NSString *)key;
+- (instancetype)orderByDescending:(NSString *)key;
 
 /*!
  @abstract Additionally sort in *descending* order by the given key.
 
  @discussion The previous keys provided will precedence over this key.
 
- @param key The key to order bye
+ @param key The key to order by.
  */
-- (void)addDescendingOrder:(NSString *)key;
+- (instancetype)addDescendingOrder:(NSString *)key;
 
 /*!
  @abstract Sort the results using a given sort descriptor.
 
  @param sortDescriptor The `NSSortDescriptor` to use to sort the results of the query.
+
+ @returns The same instance of `PFQuery` as the receiver. This allows method chaining.
  */
-- (void)orderBySortDescriptor:(NSSortDescriptor *)sortDescriptor;
+- (instancetype)orderBySortDescriptor:(NSSortDescriptor *)sortDescriptor;
 
 /*!
  @abstract Sort the results using a given array of sort descriptors.
 
  @param sortDescriptors An array of `NSSortDescriptor` objects to use to sort the results of the query.
+
+ @returns The same instance of `PFQuery` as the receiver. This allows method chaining.
  */
-- (void)orderBySortDescriptors:(NSArray *)sortDescriptors;
+- (instancetype)orderBySortDescriptors:(NSArray *)sortDescriptors;
 
 ///--------------------------------------
 /// @name Getting Objects by ID
@@ -478,7 +540,7 @@
 - (BFTask *)getObjectInBackgroundWithId:(NSString *)objectId;
 
 /*!
- @asbtract Gets a <PFObject> asynchronously and calls the given block with the result.
+ @abstract Gets a <PFObject> asynchronously and calls the given block with the result.
 
  @warning This method mutates the query.
  It will reset limit to `1`, skip to `0` and remove all conditions, leaving only `objectId`.
@@ -510,7 +572,7 @@
 ///--------------------------------------
 
 /*!
- @asbtract Returns a <PFUser> with a given id.
+ @abstract Returns a <PFUser> with a given id.
 
  @param objectId The id of the object that is being requested.
 
@@ -530,14 +592,14 @@
 /*!
  @deprecated Please use [PFUser query] instead.
  */
-+ (PFQuery *)queryForUser PARSE_DEPRECATED("Use [PFUser query] instead.");
++ (instancetype)queryForUser PARSE_DEPRECATED("Use [PFUser query] instead.");
 
 ///--------------------------------------
 /// @name Getting all Matches for a Query
 ///--------------------------------------
 
 /*!
- @asbtract Finds objects *synchronously* based on the constructed query.
+ @abstract Finds objects *synchronously* based on the constructed query.
 
  @returns Returns an array of <PFObject> objects that were found.
  */
@@ -553,7 +615,7 @@
 - (NSArray *)findObjects:(NSError **)error;
 
 /*!
- @asbtract Finds objects *asynchronously* and sets the `NSArray` of <PFObject> objects as a result of the task.
+ @abstract Finds objects *asynchronously* and sets the `NSArray` of <PFObject> objects as a result of the task.
 
  @returns The task, that encapsulates the work being done.
  */
@@ -684,7 +746,7 @@
 ///--------------------------------------
 
 /*!
- @asbtract Cancels the current network request (if any). Ensures that callbacks won't be called.
+ @abstract Cancels the current network request (if any). Ensures that callbacks won't be called.
  */
 - (void)cancel;
 
@@ -721,7 +783,7 @@
 @property (assign, readwrite) PFCachePolicy cachePolicy;
 
 /* !
- @asbtract The age after which a cached value will be ignored
+ @abstract The age after which a cached value will be ignored
  */
 @property (assign, readwrite) NSTimeInterval maxCacheAge;
 
@@ -749,33 +811,39 @@
 /*!
  @abstract Change the source of this query to all pinned objects.
 
- Requires Pinning to be enabled.
+ @warning Requires Local Datastore to be enabled.
+
+ @returns The same instance of `PFQuery` as the receiver. This allows method chaining.
 
  @see cachePolicy
  */
-- (PFQuery *)fromLocalDatastore;
+- (instancetype)fromLocalDatastore;
 
 /*!
  @abstract Change the source of this query to the default group of pinned objects.
 
- Requires Pinning to be enabled.
+ @warning Requires Local Datastore to be enabled.
+
+ @returns The same instance of `PFQuery` as the receiver. This allows method chaining.
 
  @see PFObjectDefaultPin
  @see cachePolicy
  */
-- (PFQuery *)fromPin;
+- (instancetype)fromPin;
 
 /*!
  @abstract Change the source of this query to a specific group of pinned objects.
 
- Requires Pinning to be enabled.
+ @warning Requires Local Datastore to be enabled.
 
  @param name The pinned group.
+
+ @returns The same instance of `PFQuery` as the receiver. This allows method chaining.
 
  @see PFObjectDefaultPin
  @see cachePolicy
  */
-- (PFQuery *)fromPinWithName:(NSString *)name;
+- (instancetype)fromPinWithName:(NSString *)name;
 
 ///--------------------------------------
 /// @name Advanced Settings
