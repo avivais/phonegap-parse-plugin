@@ -12,7 +12,15 @@
  The `PF_Twitter` class is a simple interface for interacting with the Twitter REST API,
  automating sign-in and OAuth signing of requests against the API.
  */
-@interface PF_Twitter : NSObject
+@interface PF_Twitter : NSObject {
+@private
+    NSString *consumerKey;
+    NSString *consumerSecret;
+    NSString *authToken;
+    NSString *authTokenSecret;
+    NSString *userId;
+    NSString *screenName;
+}
 
 /*!
  @abstract Consumer key of the application that is used to authorize with Twitter.
