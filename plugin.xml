@@ -119,9 +119,9 @@ If you have a build system, you may be able to automate this.
             </feature>
         </config-file>
 
-        <source-file src="src/wp/ParsePlugin.cs" />
-		<source-file src="src/wp/parse/Parse.dll" />
-		<source-file src="src/wp/parse/Parse.Phone.dll" />
+        <source-file src="src/wp8/ParsePlugin.cs" />
+		<source-file src="src/wp8/parse/Parse.dll" />
+		<source-file src="src/wp8/parse/Parse.Phone.dll" />
 		
 		<config-file target="Properties/WMAppManifest.xml" parent="/Deployment/App/Capabilities">
 			<Capability Name="ID_CAP_PUSH_NOTIFICATION" />
