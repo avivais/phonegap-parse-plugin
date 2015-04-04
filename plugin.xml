@@ -120,8 +120,9 @@ If you have a build system, you may be able to automate this.
         </config-file>
 
         <source-file src="src/wp8/ParsePlugin.cs" />
-		<source-file src="src/wp8/parse/Parse.dll" />
-		<source-file src="src/wp8/parse/Parse.Phone.dll" />
+		
+		<framework src="src/wp8/parse/Parse.dll" custom="true"/>
+		<framework src="src/wp8/parse/Parse.Phone.dll" custom="true"/>
 		
 		<config-file target="Properties/WMAppManifest.xml" parent="/Deployment/App/Capabilities">
 			<Capability Name="ID_CAP_PUSH_NOTIFICATION" />
