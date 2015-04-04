@@ -12,11 +12,15 @@
 
     <!-- android -->
     <platform name="android">
+        <preference name="APP_ID" />
+        <preference name="CLIENT_KEY" />
+        
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="ParsePlugin">
                 <param name="android-package" value="org.apache.cordova.core.ParsePlugin" />
             </feature>
         </config-file>
+        
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
           <service android:name="com.parse.PushService" />
           <receiver android:name="com.parse.ParseBroadcastReceiver">
@@ -34,6 +38,7 @@
             </intent-filter>
           </receiver>
         </config-file>
+        
         <config-file target="AndroidManifest.xml" parent="/manifest">
           <uses-permission android:name="android.permission.INTERNET" />
           <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
