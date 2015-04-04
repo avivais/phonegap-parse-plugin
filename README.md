@@ -26,6 +26,8 @@ Initial Setup
 
 Once the device is ready, call ```parsePlugin.initialize()```. This will register the device with Parse, you should see this reflected in your Parse control panel. After this runs you probably want to save the installationID somewhere, and perhaps subscribe the user to a few channels. Here is a contrived example.
 
+(Note: When using Windows Phone, clientKey must be your seperate .NET client key from Parse. So you will need to set this based on platform)
+
 ```
 parsePlugin.initialize(appId, clientKey, function() {
 
