@@ -1,0 +1,754 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Parse.Phone</name>
+    </assembly>
+    <members>
+        <member name="T:Parse.ParseAnalytics">
+            <summary>
+            Provides an interface to Parse's logging and analytics backend.
+            
+            Methods will return immediately and cache requests (along with timestamps)
+            to be handled in the background. 
+            </summary>
+        </member>
+        <member name="M:Parse.ParseAnalytics.TrackAppOpenedAsync">
+            <summary>
+            Tracks this application being launched.
+            </summary>
+            <returns>An Async Task that can be waited on or ignored.</returns>
+        </member>
+        <member name="M:Parse.ParseAnalytics.TrackEventAsync(System.String)">
+             <summary>
+             Tracks the occurrence of a custom event with additional dimensions.
+             Parse will store a data point at the time of invocation with the
+             given event name.
+            
+             Dimensions will allow segmentation of the occurrences of this
+             custom event.
+            
+             To track a user signup along with additional metadata, consider the
+             following:
+             <code>
+             IDictionary&lt;string, string&gt; dims = new Dictionary&lt;string, string&gt; {
+               { "gender", "m" },
+               { "source", "web" },
+               { "dayType", "weekend" }
+             };
+             ParseAnalytics.TrackEventAsync("signup", dims);
+             </code>
+            
+             There is a default limit of 8 dimensions per event tracked.
+             </summary>
+             <param name="name">The name of the custom event to report to ParseClient
+             as having happened.</param>
+             <returns>An Async Task that can be waited on or ignored.</returns>
+        </member>
+        <member name="M:Parse.ParseAnalytics.TrackEventAsync(System.String,System.Collections.Generic.IDictionary{System.String,System.String})">
+             <summary>
+             Tracks the occurrence of a custom event with additional dimensions.
+             Parse will store a data point at the time of invocation with the
+             given event name.
+            
+             Dimensions will allow segmentation of the occurrences of this
+             custom event.
+            
+             To track a user signup along with additional metadata, consider the
+             following:
+             <code>
+             IDictionary&lt;string, string&gt; dims = new Dictionary&lt;string, string&gt; {
+               { "gender", "m" },
+               { "source", "web" },
+               { "dayType", "weekend" }
+             };
+             ParseAnalytics.TrackEventAsync("signup", dims);
+             </code>
+            
+             There is a default limit of 8 dimensions per event tracked.
+             </summary>
+             <param name="name">The name of the custom event to report to ParseClient
+             as having happened.</param>
+             <param name="dimensions">The dictionary of information by which to
+             segment this event.</param>
+             <returns>An Async Task that can be waited on or ignored.</returns>
+        </member>
+        <member name="M:Parse.ParseAnalytics.TrackAppOpenedWithPushHashAsync(System.String)">
+            <summary>
+            Private method, used by platform-specific extensions to report an app-open
+            to the server.
+            </summary>
+            <param name="pushHash">An identifying hash for a given push notification,
+            passed down from the server.</param>
+            <returns>An Async Task that can be waited on or ignored.</returns>
+        </member>
+        <member name="M:Parse.ParseAnalytics.TrackAppOpens(Microsoft.Phone.Controls.PhoneApplicationFrame)">
+            <summary>
+            This method adds event listeners to track app opens from tiles, the app list,
+            and push notifications. Windows Phone 8 developers should use TrackAppOpens instead of
+            TrackAppOpenedAsync, which this method will call automatically.
+            
+            This method can be called in Application_Launching or as follows in the Application constructor:
+            
+            <code>
+            this.Startup += (sender, args) => {
+              ParseAnalytics.TrackAppOpens(RootFrame);
+            };
+            </code>
+            </summary>
+            <param name="frame">The RootFrame of the Application.</param>
+        </member>
+        <member name="T:Parse.ParseFacebookUtils">
+            <summary>
+            Provides a set of utilities for using Parse with Facebook.
+            </summary>
+        </member>
+        <member name="M:Parse.ParseFacebookUtils.Initialize(System.String)">
+            <summary>
+            Initializes Facebook for use with Parse.
+            </summary>
+            <param name="applicationId">Your Facebook application ID.</param>
+        </member>
+        <member name="M:Parse.ParseFacebookUtils.LogInAsync(System.String,System.String,System.DateTime,System.Threading.CancellationToken)">
+            <summary>
+            Logs in a <see cref="T:Parse.ParseUser"/> using Facebook for authentication. If a user for the
+            given Facebook credentials does not already exist, a new user will be created.
+            </summary>
+            <param name="facebookId">The user's Facebook ID.</param>
+            <param name="accessToken">A valid access token for the user.</param>
+            <param name="expiration">The expiration date of the access token.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The user that was either logged in or created.</returns>
+        </member>
+        <member name="M:Parse.ParseFacebookUtils.LogInAsync(System.String,System.String,System.DateTime)">
+            <summary>
+            Logs in a <see cref="T:Parse.ParseUser"/> using Facebook for authentication. If a user for the
+            given Facebook credentials does not already exist, a new user will be created.
+            </summary>
+            <param name="facebookId">The user's Facebook ID.</param>
+            <param name="accessToken">A valid access token for the user.</param>
+            <param name="expiration">The expiration date of the access token.</param>
+            <returns>The user that was either logged in or created.</returns>
+        </member>
+        <member name="M:Parse.ParseFacebookUtils.LinkAsync(Parse.ParseUser,System.String,System.String,System.DateTime,System.Threading.CancellationToken)">
+            <summary>
+            Links a <see cref="T:Parse.ParseUser"/> to a Facebook account, allowing you to use Facebook
+            for authentication, and providing access to Facebook data for the user.
+            </summary>
+            <param name="user">The user to link to a Facebook account.</param>
+            <param name="facebookId">The user's Facebook ID.</param>
+            <param name="accessToken">A valid access token for the user.</param>
+            <param name="expiration">The expiration date of the access token.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+        </member>
+        <member name="M:Parse.ParseFacebookUtils.LinkAsync(Parse.ParseUser,System.String,System.String,System.DateTime)">
+            <summary>
+            Links a <see cref="T:Parse.ParseUser"/> to a Facebook account, allowing you to use Facebook
+            for authentication, and providing access to Facebook data for the user.
+            </summary>
+            <param name="user">The user to link to a Facebook account.</param>
+            <param name="facebookId">The user's Facebook ID.</param>
+            <param name="accessToken">A valid access token for the user.</param>
+            <param name="expiration">The expiration date of the access token.</param>
+        </member>
+        <member name="M:Parse.ParseFacebookUtils.IsLinked(Parse.ParseUser)">
+            <summary>
+            Gets whether the given user is linked to a Facebook account. This can only be used on
+            the currently authorized user.
+            </summary>
+            <param name="user">The user to check.</param>
+            <returns><c>true</c> if the user is linked to a Facebook account.</returns>
+        </member>
+        <member name="M:Parse.ParseFacebookUtils.UnlinkAsync(Parse.ParseUser,System.Threading.CancellationToken)">
+            <summary>
+            Unlinks a user from a Facebook account. Unlinking a user will save the user's data.
+            </summary>
+            <param name="user">The user to unlink.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+        </member>
+        <member name="M:Parse.ParseFacebookUtils.UnlinkAsync(Parse.ParseUser)">
+            <summary>
+            Unlinks a user from a Facebook account. Unlinking a user will save the user's data.
+            </summary>
+            <param name="user">The user to unlink.</param>
+        </member>
+        <member name="M:Parse.ParseFacebookUtils.GetProductId">
+            <summary>
+            Fetches the app's ProductID from its manifest.
+            </summary>
+        </member>
+        <member name="M:Parse.ParseFacebookUtils.IsLogInRedirect(System.Uri)">
+            <summary>
+            Checks whether the Uri passed into your application comes from the Facebook
+            app as a result of a completed login attempt.
+            
+            Your code will usually look like this:
+            <code>
+            RootFrame.Navigating += async (sender, e) => {
+              if (ParseFacebookUtils.IsLoginRedirect(e.Uri)) {
+                ParseUser user = await ParseFacebookUtils.EndLoginAsync(
+                    sender, e, new Uri("/LandingPage.xaml", UriKind.Relative));
+                // A new user is now logged in.
+              }
+            };
+            </code>
+            </summary>
+            <param name="uri"></param>
+            <returns><c>true</c> iff the Uri is a Facebook login redirect, <c>false</c>
+            otherwise</returns>
+        </member>
+        <member name="M:Parse.ParseFacebookUtils.EndLogInAsync(System.Object,System.Windows.Navigation.NavigatingCancelEventArgs,System.Uri)">
+            <summary>
+            Call this method within your RootFrame.Navigating event handler to complete native Facebook
+            sign-on.  When handling a Facebook login redirect URI, this method will cancel the
+            pending navigation, begin asynchronously logging in the user, and immediately navigate
+            to the <paramref name="redirectUri"/>.
+            
+            Your code will usually look like this:
+            <code>
+            RootFrame.Navigating += async (sender, e) => {
+              if (ParseFacebookUtils.IsLoginRedirect(e.Uri)) {
+                ParseUser user = await ParseFacebookUtils.EndLoginAsync(
+                    sender, e, new Uri("/LandingPage.xaml", UriKind.Relative));
+                // A new user is now logged in.
+              }
+            };
+            </code>
+            </summary>
+            <param name="sender">The sender for the Navigating event.</param>
+            <param name="e">The Navigating event args.</param>
+            <param name="redirectUri">The Uri within your app to redirect to.</param>
+            <returns>The ParseUser created or logged in using Facebook credentials, or null if
+            this was not a Facebook login redirect.</returns>
+        </member>
+        <member name="M:Parse.ParseFacebookUtils.BeginLogIn(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Logs in a <see cref="T:Parse.ParseUser"/> using Facebook for authentication. If a user for the
+            given Facebook credentials does not already exist, a new user will be created.
+            
+            The user will be logged in through the Facebook app's single sign-on mechanism.
+            
+            You must add a handler to your RootFrame's Navigating event that calls EndLogInAsync so
+            that ParseFacebookUtils can handle incoming navigation attempts.
+            </summary>=
+            <param name="permissions">A list of Facebook permissions to request.</param>
+        </member>
+        <member name="M:Parse.ParseFacebookUtils.LogInAsync(Microsoft.Phone.Controls.WebBrowser,System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">
+            <summary>
+            Logs in a <see cref="T:Parse.ParseUser"/> using Facebook for authentication. If a user for the
+            given Facebook credentials does not already exist, a new user will be created.
+            
+            The user will be logged in through Facebook's OAuth web flow, so you must supply a
+            <paramref name="webView"/> that will be navigated to Facebook's authentication pages.
+            </summary>
+            <param name="webView">A web view that will be used to present the authorization pages
+            to the user.</param>
+            <param name="permissions">A list of Facebook permissions to request.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The user that was either logged in or created.</returns>
+        </member>
+        <member name="M:Parse.ParseFacebookUtils.LinkAsync(Parse.ParseUser,Microsoft.Phone.Controls.WebBrowser,System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">
+            <summary>
+            Links a <see cref="T:Parse.ParseUser"/> to a Facebook account, allowing you to use Facebook
+            for authentication, and providing access to Facebook datta for the user.
+            
+            The user will be logged in through Facebook's OAuth web flow, so you must supply a
+            <paramref name="webView"/> that will be navigated to Facebook's authentication pages.
+            </summary>
+            <param name="user">The user to link with Facebook.</param>
+            <param name="webView">A web view that will be used to present the authorization pages
+            to the user.</param>
+            <param name="permissions">A list of Facebook permissions to request.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+        </member>
+        <member name="M:Parse.ParseFacebookUtils.LogInAsync(Microsoft.Phone.Controls.WebBrowser,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Logs in a <see cref="T:Parse.ParseUser"/> using Facebook for authentication . If a user for the
+            given Facebook credentials does not already exist, a new user will be created.
+            
+            The user will be logged in through Facebook's OAuth web flow, so you must supply a
+            <paramref name="webView"/> that will be navigated to Facebook's authentication pages.
+            </summary>
+            <param name="webView">A web view that will be used to present the authorization pages
+            to the user.</param>
+            <param name="permissions">A list of Facebook permissions to request.</param>
+            <returns>The user that was either logged in or created.</returns>
+        </member>
+        <member name="M:Parse.ParseFacebookUtils.LinkAsync(Parse.ParseUser,Microsoft.Phone.Controls.WebBrowser,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Links a <see cref="T:Parse.ParseUser"/> to a Facebook account, allowing you to use Facebook
+            for authentication, and providing access to Facebook datta for the user.
+            
+            The user will be logged in through Facebook's OAuth web flow, so you must supply a
+            <paramref name="webView"/> that will be navigated to Facebook's authentication pages.
+            </summary>
+            <param name="user">The user to link with Facebook.</param>
+            <param name="webView">A web view that will be used to present the authorization pages
+            to the user.</param>
+            <param name="permissions">A list of Facebook permissions to request.</param>
+        </member>
+        <member name="P:Parse.ParseFacebookUtils.ApplicationId">
+            <summary>
+            Gets the Facebook Application ID as supplied to <see cref="M:Parse.ParseFacebookUtils.Initialize(System.String)"/>
+            </summary>
+        </member>
+        <member name="P:Parse.ParseFacebookUtils.AccessToken">
+            <summary>
+            Gets the access token for the currently logged in Facebook user.  This can be used with a
+            Facebook SDK to get access to Facebook user data.
+            </summary>
+        </member>
+        <member name="P:Parse.PlatformHooks.ApplicationSettings">
+            <summary>
+            Provides a dictionary that gets persisted on the filesystem between runs of the app.
+            This is analogous to NSUserDefaults in iOS.
+            </summary>
+        </member>
+        <member name="T:Parse.PlatformHooks.SettingsWrapper">
+            <summary>
+            Wraps the custom settings object for Parse so that it can be exposed as ApplicationSettings.
+            </summary>
+        </member>
+        <member name="T:Parse.ParsePush">
+            <summary>
+             A utility class for sending push notifications.
+            </summary>
+        </member>
+        <member name="M:Parse.ParsePush.PushJson(Microsoft.Phone.Notification.NotificationEventArgs)">
+            <summary>
+            Extract the JSON dictionary used to send this push.
+            </summary>
+            <param name="args">The args parameter passed to a push received event.</param>
+            <returns>The JSON dictionary used to send this push.</returns>
+        </member>
+        <member name="M:Parse.ParsePush.PushJson(System.Windows.Navigation.NavigationEventArgs)">
+            <summary>
+            A method for getting the JSON dictionary used to send a push notification from the
+            OnNavigated event handler, i.e.
+            
+            <code>
+            public override void OnNavigatedTo(NavigationEventArgs args) {
+              var json = PushJson(args);
+              /* ... */
+            }
+            </code>
+            </summary>
+            <param name="args">The args parameter passed to OnNavigatedTo</param>
+            <returns>The JSON dictionary used to send this push.</returns>
+        </member>
+        <member name="M:Parse.ParsePush.#ctor">
+            <summary>
+            Creates a push which will target every device. The Data field must be set before calling SendAsync.
+            </summary>
+        </member>
+        <member name="M:Parse.ParsePush.SendAsync">
+            <summary>
+             Request a push to be sent. When this task completes, Parse has successfully acknowledged a request
+             to send push notifications but has not necessarily finished sending all notifications
+             requested. The current status of recent push notifications can be seen in your Push Notifications
+             console on http://parse.com
+            </summary>
+            <returns>A Task for continuation.</returns>
+        </member>
+        <member name="M:Parse.ParsePush.SendAsync(System.Threading.CancellationToken)">
+            <summary>
+             Request a push to be sent. When this task completes, Parse has successfully acknowledged a request
+             to send push notifications but has not necessarily finished sending all notifications
+             requested. The current status of recent push notifications can be seen in your Push Notifications
+             console on http://parse.com
+            </summary>
+            <param name="cancellationToken">CancellationToken to cancel the current operation.</param>
+        </member>
+        <member name="M:Parse.ParsePush.SubscribeAsync(System.String)">
+            <summary>
+            Subscribe the current installation to this channel. This is shorthand for:
+            
+            <code>
+            var installation = ParseInstallation.CurrentInstallation;
+            installation.AddUniqueToList("channels", channel);
+            installation.SaveAsync();
+            </code>
+            </summary>
+            <param name="channel">The channel to which this installation should subscribe.</param>
+        </member>
+        <member name="M:Parse.ParsePush.SubscribeAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Subscribe the current installation to this channel. This is shorthand for:
+            
+            <code>
+            var installation = ParseInstallation.CurrentInstallation;
+            installation.AddUniqueToList("channels", channel);
+            installation.SaveAsync(cancellationToken);
+            </code>
+            </summary>
+            <param name="channel">The channel to which this installation should subscribe.</param>
+            <param name="cancellationToken">CancellationToken to cancel the current operation.</param>
+        </member>
+        <member name="M:Parse.ParsePush.SubscribeAsync(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Subscribe the current installation to these channels. This is shorthand for:
+            
+            <code>
+            var installation = ParseInstallation.CurrentInstallation;
+            installation.AddRangeUniqueToList("channels", channels);
+            installation.SaveAsync();
+            </code>
+            </summary>
+            <param name="channels">The channels to which this installation should subscribe.</param>
+        </member>
+        <member name="M:Parse.ParsePush.SubscribeAsync(System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">
+            <summary>
+            Subscribe the current installation to these channels. This is shorthand for:
+            
+            <code>
+            var installation = ParseInstallation.CurrentInstallation;
+            installation.AddRangeUniqueToList("channels", channels);
+            installation.SaveAsync(cancellationToken);
+            </code>
+            </summary>
+            <param name="channels">The channels to which this installation should subscribe.</param>
+            <param name="cancellationToken">CancellationToken to cancel the current operation.</param>
+        </member>
+        <member name="M:Parse.ParsePush.UnsubscribeAsync(System.String)">
+            <summary>
+            Unsubscribe the current installation from this channel. This is shorthand for:
+            
+            <code>
+            var installation = ParseInstallation.CurrentInstallation;
+            installation.Remove("channels", channel);
+            installation.SaveAsync();
+            </code>
+            </summary>
+            <param name="channel">The channel from which this installation should unsubscribe.</param>
+        </member>
+        <member name="M:Parse.ParsePush.UnsubscribeAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Unsubscribe the current installation from this channel. This is shorthand for:
+            
+            <code>
+            var installation = ParseInstallation.CurrentInstallation;
+            installation.Remove("channels", channel);
+            installation.SaveAsync(cancellationToken);
+            </code>
+            </summary>
+            <param name="channel">The channel from which this installation should unsubscribe.</param>
+            <param name="cancellationToken">CancellationToken to cancel the current operation.</param>
+        </member>
+        <member name="M:Parse.ParsePush.UnsubscribeAsync(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Unsubscribe the current installation from these channels. This is shorthand for:
+            
+            <code>
+            var installation = ParseInstallation.CurrentInstallation;
+            installation.RemoveAllFromList("channels", channels);
+            installation.SaveAsync();
+            </code>
+            </summary>
+            <param name="channels">The channels from which this installation should unsubscribe.</param>
+        </member>
+        <member name="M:Parse.ParsePush.UnsubscribeAsync(System.Collections.Generic.IEnumerable{System.String},System.Threading.CancellationToken)">
+            <summary>
+            Unsubscribe the current installation from these channels. This is shorthand for:
+            
+            <code>
+            var installation = ParseInstallation.CurrentInstallation;
+            installation.RemoveAllFromList("channels", channels);
+            installation.SaveAsync(cancellationToken);
+            </code>
+            </summary>
+            <param name="channels">The channels from which this installation should unsubscribe.</param>
+            <param name="cancellationToken">CancellationToken to cancel the current operation.</param>
+        </member>
+        <member name="M:Parse.ParsePush.SendAlertAsync(System.String)">
+            <summary>
+            Pushes a simple message to every device. This is shorthand for:
+            
+            <code>
+            var push = new ParsePush();
+            push.Data = new Dictionary&lt;string, object&gt;{{"alert", alert}};
+            return push.SendAsync();
+            </code>
+            </summary>
+            <param name="alert">The alert message to send.</param>
+        </member>
+        <member name="M:Parse.ParsePush.SendAlertAsync(System.String,System.String)">
+            <summary>
+            Pushes a simple message to every device subscribed to channel. This is shorthand for:
+            
+            <code>
+            var push = new ParsePush();
+            push.Channels = new List&lt;string&gt; { channel };
+            push.Data = new Dictionary&lt;string, object&gt;{{"alert", alert}};
+            return push.SendAsync();
+            </code>
+            </summary>
+            <param name="alert">The alert message to send.</param>
+            <param name="channel">An Installation must be subscribed to channel to receive this Push Notification.</param>
+        </member>
+        <member name="M:Parse.ParsePush.SendAlertAsync(System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Pushes a simple message to every device subscribed to any of channels. This is shorthand for:
+            
+            <code>
+            var push = new ParsePush();
+            push.Channels = channels;
+            push.Data = new Dictionary&lt;string, object&gt;{{"alert", alert}};
+            return push.SendAsync();
+            </code>
+            </summary>
+            <param name="alert">The alert message to send.</param>
+            <param name="channels">An Installation must be subscribed to any of channels to receive this Push Notification.</param>
+        </member>
+        <member name="M:Parse.ParsePush.SendAlertAsync(System.String,Parse.ParseQuery{Parse.ParseInstallation})">
+            <summary>
+            Pushes a simple message to every device matching the target query. This is shorthand for:
+            
+            <code>
+            var push = new ParsePush();
+            push.Query = query;
+            push.Data = new Dictionary&lt;string, object&gt;{{"alert", alert}};
+            return push.SendAsync();
+            </code>
+            </summary>
+            <param name="alert">The alert message to send.</param>
+            <param name="query">A query filtering the devices which should receive this Push Notification.</param>
+        </member>
+        <member name="M:Parse.ParsePush.SendDataAsync(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Pushes an arbitrary payload to every device. This is shorthand for:
+            
+            <code>
+            var push = new ParsePush();
+            push.Data = data;
+            return push.SendAsync();
+            </code>
+            </summary>
+            <param name="data">A push payload. See the ParsePush.Data property for more information.</param>
+        </member>
+        <member name="M:Parse.ParsePush.SendDataAsync(System.Collections.Generic.IDictionary{System.String,System.Object},System.String)">
+            <summary>
+            Pushes an arbitrary payload to every device subscribed to channel. This is shorthand for:
+            
+            <code>
+            var push = new ParsePush();
+            push.Channels = new List&lt;string&gt; { channel };
+            push.Data = data;
+            return push.SendAsync();
+            </code>
+            </summary>
+            <param name="data">A push payload. See the ParsePush.Data property for more information.</param>
+            <param name="channel">An Installation must be subscribed to channel to receive this Push Notification.</param>
+        </member>
+        <member name="M:Parse.ParsePush.SendDataAsync(System.Collections.Generic.IDictionary{System.String,System.Object},System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Pushes an arbitrary payload to every device subscribed to any of channels. This is shorthand for:
+            
+            <code>
+            var push = new ParsePush();
+            push.Channels = channels;
+            push.Data = data;
+            return push.SendAsync();
+            </code>
+            </summary>
+            <param name="data">A push payload. See the ParsePush.Data property for more information.</param>
+            <param name="channels">An Installation must be subscribed to any of channels to receive this Push Notification.</param>
+        </member>
+        <member name="M:Parse.ParsePush.SendDataAsync(System.Collections.Generic.IDictionary{System.String,System.Object},Parse.ParseQuery{Parse.ParseInstallation})">
+            <summary>
+            Pushes an arbitrary payload to every device matching target. This is shorthand for:
+            
+            <code>
+            var push = new ParsePush();
+            push.Query = query
+            push.Data = data;
+            return push.SendAsync();
+            </code>
+            </summary>
+            <param name="data">A push payload. See the ParsePush.Data property for more information.</param>
+            <param name="query">A query filtering the devices which should receive this Push Notification.</param>
+        </member>
+        <member name="E:Parse.ParsePush.ToastNotificationReceived">
+            <summary>
+            An event fired when a push notification of any type (i.e. toast, tile, badge, or raw) is
+            received.
+            </summary>
+        </member>
+        <member name="E:Parse.ParsePush.PushNotificationReceived">
+            <summary>
+            A generic event handler for notifications of all types. Because this event is also fired
+            when a raw notification is sent, the event args are very hard to use. You only get a byte
+            stream! We'll reveal this publicly once we support raw notifications; in the meantime we
+            should leave ToastNotificationReceived as the golden road.
+            </summary>
+        </member>
+        <member name="P:Parse.ParsePush.Query">
+            <summary>
+            An installation query that specifies which installations shoudl receive
+            this push.
+            This should not be used in tandem with Channels.
+            </summary>
+        </member>
+        <member name="P:Parse.ParsePush.Channels">
+            <summary>
+            A short-hand to set a query which only discriminates on the channels to which a device is subscribed.
+            This is shorthand for:
+            
+            <code>
+            var push = new Push();
+            push.Query = ParseInstallation.Query.WhereKeyContainedIn("channels", channels);
+            </code>
+            
+            This cannot be used in tandem with Query.
+            </summary>
+        </member>
+        <member name="P:Parse.ParsePush.Expiration">
+            <summary>
+            The time at which this push will expire. This should not be used in tandem with ExpirationInterval.
+            </summary>
+        </member>
+        <member name="P:Parse.ParsePush.ExpirationInterval">
+            <summary>
+            The time from initial schedul when this push will expire. This should not be used in tandem with Expiration.
+            </summary>
+        </member>
+        <member name="P:Parse.ParsePush.Data">
+            <summary>
+            The contents of this push. Some keys have special meaning. A full list of pre-defined
+            keys can be found in the Parse Push Guide. The following keys affect WinRT devices.
+            Keys which do not start with x-winrt- can be prefixed with x-winrt- to specify an
+            override only sent to winrt devices.
+            alert: the body of the alert text.
+            title: The title of the text.
+            x-winrt-payload: A full XML payload to be sent to WinRT installations instead of
+                 the auto-layout.
+            This should not be used in tandem with Alert.
+            </summary>
+        </member>
+        <member name="P:Parse.ParsePush.Alert">
+            <summary>
+            A conveninence method which sets Data to a dictionary with alert as its only field. Equivalent to
+            
+            <code>
+            Data = new Dictionary&lt;string, object&gt; {{"alert", alert}};
+            </code>
+            
+            This should not be used in tandem with Data.
+            </summary>
+        </member>
+        <member name="T:Parse.ParseInstallation">
+            <summary>
+             Represents this app installed on this device. Use this class to track infomation you want
+             to sample from (i.e. if you update a field on app launch, you can issue a query to see
+             the number of devices which were active in the last N hours).
+            </summary>
+        </member>
+        <member name="F:Parse.ParseInstallation.currentInstallationMatchesDisk">
+            <summary>
+            Whether the currentInstallation is known to match the serialized version on disk.
+            This is useful for saving a filesystem check if you try to load currentInstallation
+            frequently while there is none on disk.
+            </summary>
+        </member>
+        <member name="M:Parse.ParseInstallation.#ctor">
+            <summary>
+            Constructs a new ParseInstallation. Generally, you should not need to construct
+            ParseInstallations yourself. Instead use <see cref="P:Parse.ParseInstallation.CurrentInstallation"/>.
+            </summary>
+        </member>
+        <member name="F:Parse.ParseInstallation.tzNameMap">
+            <summary>
+            This mapping of Windows names to a standard everyone else uses is maintained 
+            by the Unicode consortium, which makes this officially the first helpful
+            interaction between Unicode and Microsoft.
+            Unfortunately this is a little lossy in that we only store the first mapping in each zone because
+            Microsoft does not give us more granular location information.
+            Built from http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/zone_tzid.html
+            </summary>
+        </member>
+        <member name="F:Parse.ParseInstallation.toastChannelTag">
+            <summary>
+            Future proofing: Right now there's only one valid channel for the app, but we will likely
+            want to allow additional channels for auxiliary tiles (i.e. a contacts app can have a new
+            channel for each contact and the UI needs to pop up on the right tile). The expansion job
+            generically has one _Installation field it passes to device-specific code, so we store a map
+            of tag -> channel URI. Right now, there is only one valid tag and it is automatic.
+            Unsed variable warnings are suppressed becaue this const is used in WinRT and WinPhone but not NetFx.
+            </summary>
+        </member>
+        <member name="M:Parse.ParseInstallation.GetAppAttribute(System.String)">
+            <summary>
+            Gets an attribute from the Windows Phone App Manifest App element
+            </summary>
+            <param name="attributeName">the attribute name</param>
+            <returns>the attribute value</returns>
+        </member>
+        <member name="P:Parse.ParseInstallation.CurrentInstallation">
+            <summary>
+            Gets the ParseInstallation representing this app on this device.
+            </summary>
+        </member>
+        <member name="P:Parse.ParseInstallation.Query">
+            <summary>
+            Constructs a <see cref="T:Parse.ParseQuery`1"/> for ParseInstallations.
+            </summary>
+            <remarks>
+            Only the following types of queries are allowed for installations:
+            
+            <code>
+            query.GetAsync(objectId)
+            query.WhereEqualTo(key, value)
+            query.WhereMatchesKeyInQuery&lt;TOther&gt;(key, keyInQuery, otherQuery)
+            </code>
+            
+            You can add additional query conditions, but one of the above must appear as a top-level <c>AND</c>
+            clause in the query.
+            </remarks>
+        </member>
+        <member name="P:Parse.ParseInstallation.InstallationId">
+            <summary>
+            A GUID that uniquely names this app installed on this device.
+            </summary>
+        </member>
+        <member name="P:Parse.ParseInstallation.TimeZone">
+            <summary>
+            The time zone in which this device resides. This string is in the tz database format
+            Parse uses for local-time pushes. Due to platform restrictions, the mapping is less
+            granular on Windows than it may be on other systems. E.g. The zones
+            America/Vancouver America/Dawson America/Whitehorse, America/Tijuana, PST8PDT, and
+            America/Los_Angeles are all reported as America/Los_Angeles.
+            </summary>
+        </member>
+        <member name="P:Parse.ParseInstallation.ParseVersion">
+            <summary>
+            The version of the Parse SDK used to build this application.
+            </summary>
+        </member>
+        <member name="P:Parse.ParseInstallation.Channels">
+            <summary>
+            A sequence of arbitrary strings which are used to identify this installation for push notifications.
+            By convention, the empty string is known as the "Broadcast" channel.
+            </summary>
+        </member>
+        <member name="P:Parse.ParseInstallation.DeviceType">
+            <summary>
+            The runtime target of this application. Is one of winrt, winphone, or dotnet.
+            </summary>
+        </member>
+        <member name="P:Parse.ParseInstallation.AppName">
+            <summary>
+            The user-friendly display name of this application.
+            </summary>
+        </member>
+        <member name="P:Parse.ParseInstallation.AppIdentifier">
+            <summary>
+            The system-dependent unique identifier of this installation. This identifier should be
+            sufficient to distinctly name an app on stores which may allow multiple apps with the
+            same display name.
+            </summary>
+        </member>
+        <member name="P:Parse.ParseInstallation.AppVersion">
+            <summary>
+            A version string consisting of Major.Minor.Build.Revision.
+            </summary>
+        </member>
+    </members>
+</doc>
