@@ -10,7 +10,7 @@
 /// @name Version
 ///--------------------------------------
 
-#define PARSE_VERSION @"1.6.2"
+#define PARSE_VERSION @"1.6.1"
 
 extern NSInteger const PARSE_API_VERSION;
 
@@ -174,7 +174,7 @@ extern NSInteger const kPFErrorInvalidImageData;
 extern NSInteger const kPFErrorUnsavedFile;
 /*! @abstract 153: Fail to delete file. */
 extern NSInteger const kPFErrorFileDeleteFailure;
-/*! @abstract 155: Application has exceeded its request limit. */
+/*! @abstract 155: Application has exceeded its analytics request limit. */
 extern NSInteger const kPFErrorRequestLimitExceeded;
 /*! @abstract 160: Invalid event name. */
 extern NSInteger const kPFErrorInvalidEventName;
